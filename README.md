@@ -10,4 +10,5 @@
 
 -  Usiamo un dataset preso al seguente link: <a href="https://www.kaggle.com/datasets/gti-upm/leapgestrecog">kaggle</a>
 
-- classificatiore: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](./src/neuralnetwork/classificator.ipynb)
+- classificatiore: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/vinrus/progetto-visione/blob/main/src/neuralnetwork/classificator.ipynb?authuser=3)
+
