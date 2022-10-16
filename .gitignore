@@ -1,6 +1,6 @@
 
 *.png
 *.jpg
-tmp/
-
-#assets/models/tmp
+assets/models/tmp
+assets/models/*.h5
+src/tmp
