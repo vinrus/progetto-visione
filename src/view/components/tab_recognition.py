@@ -17,22 +17,24 @@ class TabRecognition(MDFloatLayout, MDTabsBase, BoxLayout):
         print("[DEBUG] start camera")    
         capture = cv2.VideoCapture(0)
         self.ids.buttonStopCamera.disabled = False
+        self.ids.buttonStartClassification.disabled = False
         self.ids.buttonStartCamera.disabled = True
+        self.ids.camera.isClassification = False
         self.isStartCamera = True
-        self.ids.camera.start(capture)
+        self.ids.camera.start(capture, ids=self.ids)
     
     def onStop(self, *largs):
         global capture
         if capture != None:
+            self.ids.camera.isClassification = False
             print("[DEBUG] stop camera")    
             self.isStartCamera = False
             self.ids.buttonStartCamera.disabled = False
             self.ids.buttonStopCamera.disabled = True
+            self.ids.buttonStartClassification.disabled = True
             capture.release()
             capture = None
 
-    def recogntionHandle(self):
+    def classificationHandle(self):
         print("[DEBUG] recogntionHandle")
-        # camera = self.ids['camera']
-        # timestr = time.strftime("%Y%m%d_%H%M%S")
-        # camera.export_to_png("IMG_{}.png".format(timestr))
+        self.ids.camera.isClassification = True

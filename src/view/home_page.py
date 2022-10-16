@@ -19,7 +19,7 @@ class HomePage(MDApp):
     def on_start(self):
          for i in range(3):
             if i == 0:
-                tab = TabRecognition(title=f"Recognition")
+                tab = TabRecognition(title=f"Recognition") # TabRecognition
                 self.root.ids.tabs.add_widget(tab)
             elif i == 1: 
                 tab = TabDetection(title=f"Recognition+Detection")
@@ -40,7 +40,7 @@ MDBoxLayout:
     orientation: "vertical"
 
     MDTopAppBar:
-        title: "Progetto visione e percezione"
+        title: "Project visione e percezione"
 
     MDTabs:
         id: tabs
@@ -51,40 +51,52 @@ MDBoxLayout:
     MDLabel:
         id: label
         size_hint_y: None
-        width: 100
-        height: 100
+        width: 1
+        height: 1
 
     GridLayout: 
-        rows: 2
+        rows: 3
         cols: 1
 
         KivyCamera:
             id: camera
             halign: "center"
 
+        MDLabel:
+            id: labelOutput
+            size_hint_y: None
+            halign: "center"
+            height: 100
+
+
         GridLayout: 
             rows: 1
             cols: 3
             padding: 10
             spacing: 10
-            halign: "bottom"
+            valign: 'bottom'
+            halign: 'center'
             size_hint_y: None
             
             MDRectangleFlatButton:
                 id: buttonStartCamera
+                halign: 'center'
                 text:  'Start Camera'
                 on_press: root.onStart()
 
             MDRectangleFlatButton:
                 id: buttonStopCamera
+                halign: 'center'
                 text: 'Stop Camera'
                 disabled: True
                 on_press: root.onStop()
 
             MDRectangleFlatButton:
-                id: buttonStartRecognition
-                text: 'Start Recognition'
-                on_press: root.recogntionHandle()
+                id: buttonStartClassification
+                halign: 'center'
+                text: 'Start Classification'
+                disabled: True
+                on_press: root.classificationHandle()
     
 
 <TabDetection>
