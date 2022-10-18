@@ -4,7 +4,7 @@
 - Installare  le dipendeze necessarie tramite il file required.txt con il comando : 
 
      <code>
-     pip3 install -r requirement.txt
+     pip3 install -r requirements.txt
      </code>
 
 - classificatiore: 

@@ -11,3 +11,4 @@ matplotlib
 tables
 kivymd
 kivy
+mediapipe==0.8.11
