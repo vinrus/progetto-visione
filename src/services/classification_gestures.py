@@ -15,7 +15,7 @@ height = 720
 min_det_confidance = 0.7
 min_trac_confidance =  0.5
 hands_num = 1
-static_image_mode = True
+static_image_mode = False
 
 # dataset csv path
 csv_path_r = "assets/dataset/keypoint.csv"
@@ -60,7 +60,7 @@ def main():
                 # Conversion to relative coordinates and normalized coordinates
                 pre_processed_landmark_list = pre_process_landmark(landmark_list)
                 # Write to the dataset file
-                if 48 <= key <= 52:  # 0 ~ 4 (5 gestures)
+                if 48 <= key <= 53:  # 0 ~ 5 (6 gestures)
                     numb_class = key - 48    
                     write_on_csv(numb_class, pre_processed_landmark_list)
                 # debug_image = draw_landmarks(debug_image, landmark_list)
