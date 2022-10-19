@@ -1,4 +1,4 @@
-# using mediapipe tu collect keypoints and save them to the dataset.csv
+# using mediapipe tu collect keypoints and save them to the keypoint.csv
 
 import csv
 import cv2 
@@ -8,8 +8,8 @@ import itertools
 
 # camera shapes
 video = 0
-width = 960
-height = 540
+width = 1280
+height = 720
 
 # detection value
 min_det_confidance = 0.7
@@ -18,7 +18,7 @@ hands_num = 1
 static_image_mode = True
 
 # dataset csv path
-csv_path_r = "assets/dataset/keypoints.csv"
+csv_path_r = "assets/dataset/keypoint.csv"
 
 def main():
     # camera preparation 
@@ -26,8 +26,9 @@ def main():
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
-    # model mediapipi and configration of variable
+    # model mediapipe and configuration of the variables
     mp_hands = mp.solutions.hands
+    mpDraw = mp.solutions.drawing_utils
     hands = mp_hands.Hands(
         # from documentation(https://google.github.io/mediapipe/solutions/hands#static_image_mode)
         static_image_mode = static_image_mode,
@@ -46,7 +47,7 @@ def main():
         debug_image = copy.deepcopy(image) 
 
         # Detection implementation
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
         image.flags.writeable = False
         results = hands.process(image)
@@ -56,15 +57,15 @@ def main():
             for hand_landmarks, handedness in zip(results.multi_hand_landmarks,results.multi_handedness):
                 # Landmark calculation
                 landmark_list = calc_landmark_list(debug_image, hand_landmarks)
-                # Conversion to relative coordinates / normalized coordinates
+                # Conversion to relative coordinates and normalized coordinates
                 pre_processed_landmark_list = pre_process_landmark(landmark_list)
                 # Write to the dataset file
                 if 48 <= key <= 52:  # 0 ~ 4 (5 gestures)
                     numb_class = key - 48    
                     write_on_csv(numb_class, pre_processed_landmark_list)
                 # debug_image = draw_landmarks(debug_image, landmark_list)
-                mpDraw = mp.solutions.drawing_utils
                 mpDraw.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)        
         cv2.imshow('Hand Gesture | Create Dataset', image)        
     cap.release()
     cv2.destroyAllWindows()
