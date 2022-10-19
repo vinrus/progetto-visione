@@ -4,3 +4,4 @@
 assets/models/tmp
 assets/models/*.h5
 src/tmp
+*.DS_Store
