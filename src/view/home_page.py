@@ -1,11 +1,7 @@
-import cv2
 from kivy.lang import Builder
-
 from kivymd.app import MDApp
 
-
-from utility.utility import Utility
-from view.components.tab import TabDetection, Tab2
+from view.components.tab_recognition_arduino import TabRecognitionArduino
 from view.components.tab_recognition import TabRecognition
 
 class HomePage(MDApp):
@@ -22,15 +18,10 @@ class HomePage(MDApp):
                 tab = TabRecognition(title=f"Recognition") # TabRecognition
                 self.root.ids.tabs.add_widget(tab)
             elif i == 1: 
-                tab = TabDetection(title=f"Recognition+Detection")
-                self.root.ids.tabs.add_widget(tab)
-            elif i == 2: 
-                tab = Tab2(title=f"Recognition+Detection+Arduino")
+                tab = TabRecognitionArduino(title=f"Recognition+Detection+Arduino")
                 self.root.ids.tabs.add_widget(tab)
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
-        print("id: " + str(instance_tab.ids))
-        print("instance_tabs: " + str(instance_tabs))
         instance_tab.ids.label.text = tab_text
 
 
@@ -71,13 +62,12 @@ MDBoxLayout:
 
         GridLayout: 
             rows: 1
-            cols: 3
             padding: 10
             spacing: 10
             valign: 'bottom'
             halign: 'center'
             size_hint_y: None
-            
+
             MDRectangleFlatButton:
                 id: buttonStartCamera
                 halign: 'center'
@@ -92,23 +82,22 @@ MDBoxLayout:
                 on_press: root.onStop()
 
             MDRectangleFlatButton:
+                id: buttonbackgroundCamera
+                halign: 'center'
+                text: 'background Camera'
+                disabled: True
+                on_press: root.onBackground()
+
+            MDRectangleFlatButton:
                 id: buttonStartClassification
                 halign: 'center'
                 text: 'Start Classification'
                 disabled: True
                 on_press: root.classificationHandle()
-    
 
-<TabDetection>
+<TabRecognitionArduino>
     MDLabel:
         id: label
         halign: "center"
-    
-                
-<Tab2>
-    MDLabel:
-        id: label
-        halign: "center"
-    
 '''
-########################################## 
+##########################################

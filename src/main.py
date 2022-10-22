@@ -1,5 +1,3 @@
-import cv2
-
 from view.home_page import HomePage
 
 
