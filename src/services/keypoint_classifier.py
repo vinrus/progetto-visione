@@ -1,9 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import numpy as np
 import tensorflow as tf
-
-from keras.models import load_model
 
 from utility.constants import Constants
 
@@ -17,8 +13,6 @@ class KeyPointClassifier(object):
 
         self.interpreter = tf.lite.Interpreter(model_path=model_path,
                                                num_threads=num_threads)
-
-
         self.interpreter.allocate_tensors()
         self.input_details = self.interpreter.get_input_details()
         self.output_details = self.interpreter.get_output_details()

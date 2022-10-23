@@ -3,6 +3,7 @@ from kivymd.app import MDApp
 
 from view.components.tab_recognition_arduino import TabRecognitionArduino
 from view.components.tab_recognition import TabRecognition
+from view.components.tab_settings import TabSettings
 
 class HomePage(MDApp):
     def build(self):
@@ -20,10 +21,13 @@ class HomePage(MDApp):
             elif i == 1: 
                 tab = TabRecognitionArduino(title=f"Recognition+Detection+Arduino")
                 self.root.ids.tabs.add_widget(tab)
+            elif i == 2: 
+                tab = TabSettings(title=f"Settings")
+                self.root.ids.tabs.add_widget(tab)
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
-        instance_tab.ids.label.text = tab_text
-
+        # instance_tab.ids.label.text = tab_text
+        print(f"[DEBUG] {tab_text}")
 
 ##################LAYERS################## 
 KV = '''
@@ -38,13 +42,6 @@ MDBoxLayout:
         on_tab_switch: app.on_tab_switch(*args)
 
 <TabRecognition>
-
-    MDLabel:
-        id: label
-        size_hint_y: None
-        width: 1
-        height: 1
-
     GridLayout: 
         rows: 3
         cols: 1
@@ -84,7 +81,7 @@ MDBoxLayout:
             MDRectangleFlatButton:
                 id: buttonbackgroundCamera
                 halign: 'center'
-                text: 'background Camera'
+                text: 'Background Camera'
                 disabled: True
                 on_press: root.onBackground()
 
@@ -99,5 +96,57 @@ MDBoxLayout:
     MDLabel:
         id: label
         halign: "center"
+        text: "TabRecognitionArduino"
+
+<TabSettings>
+    GridLayout: 
+        rows: 2
+        cols: 2
+        height: 50
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        MDLabel:
+            halign: "center"
+            height: 50
+            text: "Path Model"
+        
+        MDLabel:
+            id: pathModel
+            halign: "center"
+            text: root.getLabelPathModel()
+            height: 50
+            pos_hint: {"center_y": .5}
+        # MDTextField: ##TODO per evoluzione modifca dei path
+        #     id: pathModel
+        #     hint_text: root.getLabelPathModel()
+        #     helper_text: root.getLabelPathModel()
+        #     helper_text_mode: "on_error"
+        #     pos_hint: {"center_y": .5}
+            
+        MDLabel:
+            halign: "center"
+            height: 50
+            text: "Path File Label"
+        
+        MDLabel:
+            id: pathLabel
+            halign: "center"
+            height: 50
+            text: root.getLabelPathLabel()
+
+    BoxLayout:
+        orientation: "vertical"
+        heith: 2000
+        size_hint_x: None
+        
+        MDLabel:
+            halign: "center"
+
+    
+
+
+
 '''
 ##########################################
+
+

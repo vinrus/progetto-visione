@@ -7,10 +7,9 @@ import numpy as np
 import mediapipe as mp
 import itertools
 import csv
+from services.keypoint_classifier import KeyPointClassifier
 
 from utility.constants import Constants
-from utility.keypoint_classifier import KeyPointClassifier
-
 
 class ServiceRecognition:
 
@@ -126,21 +125,21 @@ class ServiceRecognition:
 
     def _drawInfoText(self, image, brect, handedness, hand_sign_text):  # , finger_gesture_text
         # cv2.rectangle(image, (brect[0], brect[1]), (brect[2], brect[1] - 22), (0, 255, 0), 1)
-        
+        resultPrediction = ''
         print(f"[DEBUG] hand_sign_text: {str(handedness)}")
         info_text = handedness.classification[0].label[0:]
         score = handedness.classification[0].score * 100
         print(f"[DEBUG] score: {str(score)}")
         print(f"[DEBUG] hand_sign_text: {str(hand_sign_text)}")
         
-        if hand_sign_text != "":
-            info_text = 'Handle: ' + info_text + ' - ' + hand_sign_text + ' %0.2f ' % (score) + ' %'
+        if hand_sign_text != "" and score > 80:
+            resultPrediction = hand_sign_text + ' %0.2f ' % (score) + ' %'
         
-        # cv2.putText(image, info_text, (brect[0] + 5, brect[1] - 4),cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1, cv2.LINE_8)
+        # cv2.putText(image, resultPrediction , (brect[0] + 5, brect[1] - 4),cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1, cv2.LINE_8)
         
-        print(f"[DEBUG] info_text: {str(info_text)}")
+        print(f"[DEBUG] resultPrediction : {str(resultPrediction )}")
 
-        return image, info_text
+        return image, resultPrediction 
 
     def _calcBoundingRect(self, image, landmarks):
         image_width, image_height = image.shape[1], image.shape[0]
