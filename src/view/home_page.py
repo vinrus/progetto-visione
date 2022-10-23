@@ -26,7 +26,6 @@ class HomePage(MDApp):
                 self.root.ids.tabs.add_widget(tab)
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
-        # instance_tab.ids.label.text = tab_text
         print(f"[DEBUG] {tab_text}")
 
 ##################LAYERS################## 
@@ -66,7 +65,7 @@ MDBoxLayout:
             size_hint_y: None
 
             MDRectangleFlatButton:
-                id: buttonStartCamera
+                id: buttonCamera
                 halign: 'center'
                 text:  'Start Camera'
                 on_press: root.onStart()
@@ -93,10 +92,53 @@ MDBoxLayout:
                 on_press: root.classificationHandle()
 
 <TabRecognitionArduino>
-    MDLabel:
-        id: label
-        halign: "center"
-        text: "TabRecognitionArduino"
+    GridLayout: 
+        rows: 3
+        cols: 1
+       
+        KivyCamera:
+            id: camera
+            halign: "center"
+        
+        MDLabel:
+            id: labelOutput
+            size_hint_y: None
+            halign: "center"
+            height: 100
+
+        GridLayout: 
+            rows: 1
+            padding: 10
+            spacing: 10
+            valign: 'bottom'
+            halign: 'center'
+            size_hint_y: None
+
+            MDRoundFlatIconButton:
+                icon: "camera"
+                width: dp(250)
+                id: buttonCamera
+                halign: 'center'
+                text: root.buttonCamera
+                on_press: root.onStart()
+
+            MDRoundFlatIconButton:
+                icon: "all-inclusive-box-outline"
+                width: dp(250)
+                id: buttonConnectionArduino
+                halign: 'center'
+                text: root.buttonConnectionArduino
+                disabled: root.isDisabledConnectionArduino
+                on_press: root.onArduino()
+
+            MDRoundFlatIconButton:
+                icon: "allergy"
+                width: dp(250)
+                id: buttonStartClassification
+                halign: 'center'
+                text: root.buttonClassification
+                disabled: root.isDisabledClassification
+                on_press: root.onClassification()
 
 <TabSettings>
     GridLayout: 
@@ -116,6 +158,7 @@ MDBoxLayout:
             text: root.getLabelPathModel()
             height: 50
             pos_hint: {"center_y": .5}
+        
         # MDTextField: ##TODO per evoluzione modifca dei path
         #     id: pathModel
         #     hint_text: root.getLabelPathModel()
