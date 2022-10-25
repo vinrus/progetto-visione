@@ -4,6 +4,9 @@ import numpy as np
 from kivy.clock import Clock
 from kivy.graphics.texture import Texture
 from kivy.uix.image import Image
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDFlatButton
+
 
 from services.service_recognition import ServiceRecognition
 
@@ -17,11 +20,13 @@ class KivyCamera(Image):
     isClassification = False
     isBackgruond = False
     
+    isActiveArduino = False
+    value = []
+    serviceArduino = None
 
     def __init__(self, **kwargs):
         super(KivyCamera, self).__init__(**kwargs)
         self.capture = None
-        
         self.serviceRecognition = ServiceRecognition()
 
     def start(self, capture, fps=30, ids=""):
@@ -35,29 +40,51 @@ class KivyCamera(Image):
 
     def update(self, dt):
         ret, frame = self.capture.read()
-
         if ret:
             texture = self.texture
 
             frame = cv2.bilateralFilter(frame, 5, 50, 100)  # smoothing filter
             frame = cv2.flip(frame, 1)                      # flip the frame horizontally
-            
+                
             w, h = frame.shape[1], frame.shape[0]
 
             self.texture = texture = Texture.create(size=(w, h))
             texture.flip_vertical()
-
-            frame, infoText = self.handlerRecognitionHandle(frame)
-
-            self.handlerBackgroundMode(frame)
             
-            if infoText != '' : 
-                self.ids.labelOutput.text = f'Prediction: {infoText}'
-            else : 
-                self.ids.labelOutput.text = ''
+            frame, texture = self.handleDetection(frame=frame)
 
             texture.blit_buffer(frame.tobytes(), colorfmt='bgr')
             self.canvas.ask_update()
+
+    def handleDetection(self, frame):
+        texture = self.texture
+
+        frame = cv2.bilateralFilter(frame, 5, 50, 100)  # smoothing filter
+        frame = cv2.flip(frame, 1)                      # flip the frame horizontally
+            
+        w, h = frame.shape[1], frame.shape[0]
+        infoText = ''
+        self.texture = texture = Texture.create(size=(w, h))
+        texture.flip_vertical()
+        if not self.isActiveArduino and self.isClassification:
+            frame, infoText = self.handlerRecognitionHandle(frame)
+        elif self.isClassification:
+            # print("[DEBUG] is active arduino")
+            frame, infoText, value = self.handlerRecognitionForArduinoHandle(frame)
+            if not self.serviceArduino: 
+                print("[DEBUG] is not serviceArduino")
+            else:
+                # print("[DEBUG] is  serviceArduino")
+                self.serviceArduino.handleSendValueArduino(value)
+
+        self.handlerBackgroundMode(frame)
+        
+        if infoText != '' : 
+            self.ids.labelOutput.text = f'Prediction: {infoText}'
+        else : 
+            self.ids.labelOutput.text = ''
+        
+        return frame,texture
 
     def handlerBackgroundMode(self, frame):
         if self.isBackgruond:
@@ -75,16 +102,22 @@ class KivyCamera(Image):
             self.texture = texture1
 
     def handlerRecognitionHandle(self, frame):
-        info_text = ''
+        infoText = ''
+        # isLeft = False
         if self.isClassification:
-            frame, info_text = self.serviceRecognition.startRecognition(frame)
-        return frame, info_text
-            
-    def _removeBackground(self, frame):
-        fgmask = self.bgModel.apply(frame, learningRate=0)
-        kernel = np.ones((3, 3), np.uint8)
-        fgmask = cv2.erode(fgmask, kernel, iterations=1)
-        res = cv2.bitwise_and(frame, frame, mask=fgmask)
-        return res
+            frame, infoText, _ = self.serviceRecognition.startRecognition(frame)
+        
+        # if isLeft: 
+        #     infoText = 'Use right hand!!!!' #TODO 
+
+        return frame, infoText
+    
+    def handlerRecognitionForArduinoHandle(self, frame):
+        infoText = ''
+        handednessResult = []
+        # TODO metodo per un evoluzione della recognition che torna anche la posizione dei punti 
+        frame, infoText, handednessResult = self.serviceRecognition.startRecognition(frame)
+
+        return frame, infoText, handednessResult
 
 capture = None

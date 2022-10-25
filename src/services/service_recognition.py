@@ -11,6 +11,7 @@ from services.keypoint_classifier import KeyPointClassifier
 
 from utility.constants import Constants
 
+
 class ServiceRecognition:
 
     def __init__(self) -> None:
@@ -34,11 +35,13 @@ class ServiceRecognition:
 
     def startRecognition(self, frame):
         prediction = ''
+        isLeft = False
         image = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
         image.flags.writeable = False
         results = self.hands.process(image)
         image.flags.writeable = True
+        handednessResult = []
         # TODO mettere in comune con la parte per la creazione del dataset ???
         if results.multi_hand_landmarks is not None:
             # Bounding box calculation
@@ -49,10 +52,12 @@ class ServiceRecognition:
                 landmark_list = self._calcLandmarkList(image, hand_landmarks)
 
                 # Conversion to relative coordinates and normalized coordinates
-                pre_processed_landmark_list = self._preProcessLandmark(landmark_list)
+                pre_processed_landmark_list = self._preProcessLandmark(
+                    landmark_list)
 
-                # classification 
-                hand_sign_id = self.serviceKeyPointClassifier(pre_processed_landmark_list)
+                # classification
+                hand_sign_id = self.serviceKeyPointClassifier(
+                    pre_processed_landmark_list)
 
                 # Drawing part
                 debug_image = self._drawBoundingRect(image, brect)
@@ -62,9 +67,17 @@ class ServiceRecognition:
                     handedness,
                     self.keypoint_classifier_labels[hand_sign_id],
                 )
-                self.mpDraw.draw_landmarks(image, hand_landmarks, self.mp_hands.HAND_CONNECTIONS)
+
+                handednessResult = {
+                    'label': self.keypoint_classifier_labels[hand_sign_id],
+                    'score': handedness.classification[0].score,
+                    'index': handedness.classification[0].index,
+                    'labelHand':  handedness.classification[0].label[0:]
+                }
+                self.mpDraw.draw_landmarks(
+                    image, hand_landmarks, self.mp_hands.HAND_CONNECTIONS)
             frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        return frame, prediction
+        return frame, prediction, handednessResult
 
     def _readLabels(self):
         with open(Constants.PATH_LABEL, encoding='utf-8-sig') as f:
@@ -120,26 +133,33 @@ class ServiceRecognition:
 
     def _drawBoundingRect(self, image, brect):
         # Outer rectangle
-        cv2.rectangle(image, (brect[0], brect[1]), (brect[2], brect[3]), color=(0, 255, 0), thickness=3)
+        cv2.rectangle(image, (brect[0], brect[1]), (brect[2], brect[3]), color=(
+            0, 255, 0), thickness=3)
         return image
 
     def _drawInfoText(self, image, brect, handedness, hand_sign_text):  # , finger_gesture_text
         # cv2.rectangle(image, (brect[0], brect[1]), (brect[2], brect[1] - 22), (0, 255, 0), 1)
         resultPrediction = ''
+        isRight = False
+
         print(f"[DEBUG] hand_sign_text: {str(handedness)}")
         info_text = handedness.classification[0].label[0:]
         score = handedness.classification[0].score * 100
+
         print(f"[DEBUG] score: {str(score)}")
         print(f"[DEBUG] hand_sign_text: {str(hand_sign_text)}")
-        
+
+        if info_text != "Left":
+            isRight = True
+
         if hand_sign_text != "" and score > 80:
-            resultPrediction = hand_sign_text + ' %0.2f ' % (score) + ' %'
-        
+            resultPrediction = hand_sign_text + ' %0.2f ' % (score) + '%'
+
         # cv2.putText(image, resultPrediction , (brect[0] + 5, brect[1] - 4),cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1, cv2.LINE_8)
-        
+
         print(f"[DEBUG] resultPrediction : {str(resultPrediction )}")
 
-        return image, resultPrediction 
+        return image, resultPrediction
 
     def _calcBoundingRect(self, image, landmarks):
         image_width, image_height = image.shape[1], image.shape[0]

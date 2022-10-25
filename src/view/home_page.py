@@ -64,32 +64,28 @@ MDBoxLayout:
             halign: 'center'
             size_hint_y: None
 
-            MDRectangleFlatButton:
+            MDRoundFlatIconButton:
+                icon: "camera"
+                halign: 'center'
                 id: buttonCamera
-                halign: 'center'
-                text:  'Start Camera'
-                on_press: root.onStart()
+                text: root.buttonCamera
+                on_press: root.onCamera()
 
-            MDRectangleFlatButton:
-                id: buttonStopCamera
+            MDRoundFlatIconButton:
+                icon: "checkerboard"
+                id: buttonBackground
                 halign: 'center'
-                text: 'Stop Camera'
-                disabled: True
-                on_press: root.onStop()
-
-            MDRectangleFlatButton:
-                id: buttonbackgroundCamera
-                halign: 'center'
-                text: 'Background Camera'
+                text: root.buttonBackground
                 disabled: True
                 on_press: root.onBackground()
-
-            MDRectangleFlatButton:
-                id: buttonStartClassification
+            
+            MDRoundFlatIconButton:
+                icon: "allergy"
+                id: buttonClassification
                 halign: 'center'
-                text: 'Start Classification'
-                disabled: True
-                on_press: root.classificationHandle()
+                text: root.buttonClassification
+                disabled: root.isDisabledClassification
+                on_press: root.onClassification()
 
 <TabRecognitionArduino>
     GridLayout: 
@@ -134,7 +130,7 @@ MDBoxLayout:
             MDRoundFlatIconButton:
                 icon: "allergy"
                 width: dp(250)
-                id: buttonStartClassification
+                id: buttonClassification
                 halign: 'center'
                 text: root.buttonClassification
                 disabled: root.isDisabledClassification
@@ -159,12 +155,6 @@ MDBoxLayout:
             height: 50
             pos_hint: {"center_y": .5}
         
-        # MDTextField: ##TODO per evoluzione modifca dei path
-        #     id: pathModel
-        #     hint_text: root.getLabelPathModel()
-        #     helper_text: root.getLabelPathModel()
-        #     helper_text_mode: "on_error"
-        #     pos_hint: {"center_y": .5}
             
         MDLabel:
             halign: "center"

@@ -10,45 +10,69 @@ import time
 capture = None
 
 class TabRecognition(MDFloatLayout, MDTabsBase, BoxLayout):
-    isStartCamera = False
+    buttonCamera = 'Start Camera'
+    isCamera = False
 
-    def onStart(self, *largs):
+    buttonBackground = 'Background Camera'
+    isDisabledBackground  = True
+    
+    buttonClassification = 'Start Classification'
+    isDisabledClassification = True
+
+    def onCamera(self, *largs):
         global capture
         print("[DEBUG] start camera")
-        capture = cv2.VideoCapture(0)
-        self.ids.buttonStopCamera.disabled = False
-        self.ids.buttonStartClassification.disabled = False
-        self.ids.buttonbackgroundCamera.disabled = False
-        self.ids.buttonStartCamera.disabled = True
-        
-        self.ids.camera.isClassification = False
-        self.ids.camera.isBackgruond = False
-        
-        self.isStartCamera = True
-        self.ids.camera.start(capture, ids=self.ids)
-    
-    def onStop(self, *largs):
-        global capture
-        if capture != None:
-            self.ids.camera.isClassification = False
-            print("[DEBUG] stop camera")
-            self.isStartCamera = False
+        self.isCamera = not self.isCamera
+        if self.isCamera: 
+            capture = cv2.VideoCapture(0)
+            self.ids.buttonCamera.text = str('Stop Camera')
 
-            self.ids.buttonStartCamera.disabled = False
-            self.ids.buttonStopCamera.disabled = True
-            self.ids.buttonbackgroundCamera.disabled = True
-            self.ids.buttonStartClassification.disabled = True
+            self.isDisabledClassification = not self.isDisabledClassification
+            self.ids.buttonClassification.disabled = self.isDisabledClassification
             
-            capture.release()
-            capture = None
-    
+            self.isDisabledBackground = not self.isDisabledBackground
+            self.ids.buttonBackground.disabled = self.isDisabledBackground
+            
+            self.ids.camera.start(capture, ids=self.ids)
+
+        else : 
+            self._resetValue()
+            if capture != None:
+                capture.release()
+                capture = None
+                
+
     def onBackground(self, *largs):
         global capture
-        if capture != None:
+        self.isDisabledBackground = not self.isDisabledBackground
+        if capture != None and self.isDisabledBackground:
             print("[DEBUG] background camera")
+            self.ids.buttonBackground.text = str('Not Background Camera')
+            self.ids.camera.isBackgruond = not self.ids.camera.isBackgruond
+        else: 
+            self.ids.buttonBackground.text = str('Background Camera')
             self.ids.camera.isBackgruond = not self.ids.camera.isBackgruond
 
-
-    def classificationHandle(self):
+    def onClassification(self):
         print("[DEBUG] recogntionHandle")
-        self.ids.camera.isClassification = True
+        self.isDisabledClassification = not self.isDisabledClassification
+        if self.isDisabledClassification:
+            print("[DEBUG] background camera")
+            self.ids.buttonClassification.text = str('Stop Classification')
+            self.ids.camera.isClassification = self.isDisabledClassification
+        else: 
+            self.ids.buttonClassification.text = str('Start Classification')
+            self.ids.camera.isClassification = self.isDisabledClassification
+ 
+    def _resetValue(self):
+        self.buttonCamera = 'Start Camera'
+        self.ids.buttonCamera.text = str('Start Camera')
+        self.isCamera = False
+
+        self.buttonBackground = 'Background Camera'
+        self.ids.buttonBackground.text = str(self.buttonBackground)
+        self.isDisabledBackground  = True
+        
+        self.buttonClassification = 'Start Classification'
+        self.ids.buttonClassification.text = str(self.buttonClassification)
+        self.isDisabledClassification = True
