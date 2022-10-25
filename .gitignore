@@ -6,3 +6,4 @@ assets/models/*.h5
 src/tmp
 *.DS_Store
 assets/models/*.h5py/*
+__pycache__/

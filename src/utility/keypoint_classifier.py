@@ -15,8 +15,7 @@ class KeyPointClassifier(object):
         num_threads=1,
     ):
 
-        self.interpreter = tf.lite.Interpreter(model_path=model_path,
-                                               num_threads=num_threads)
+        self.interpreter = tf.lite.Interpreter(model_path=model_path, num_threads=num_threads)
 
 
         self.interpreter.allocate_tensors()
