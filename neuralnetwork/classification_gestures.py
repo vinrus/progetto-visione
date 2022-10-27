@@ -12,6 +12,7 @@ import argparse
 
 sys.path.append('src')
 from utility.keypoint_classifier import KeyPointClassifier
+from utility.calcFps import CalcFps
 
 # camera shapes
 video = 0
@@ -49,11 +50,17 @@ def main(mode):
 
     keypoint_classifier = KeyPointClassifier()
 
+    # FPS
+    frameCount = CalcFps(buffer_len=10)
+
     # Coordinate history
     history_length = 20
     point_history = deque(maxlen=history_length)
 
     while True:
+
+        fps = frameCount.get()
+
         numb_class = -1
         # press esc to quit
         key = cv2.waitKey(1)
@@ -96,6 +103,7 @@ def main(mode):
                 point_history.append([0, 0])
         
         image = draw_point_history(image, point_history)
+        image = draw_info(image, fps, mode)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         cv2.imshow('Hand Gesture | Create Dataset', image)
     cap.release()
@@ -189,8 +197,22 @@ def draw_point_history(image, point_history):
     for index, point in enumerate(point_history):
         if point[0] != 0 and point[1] != 0:
             cv2.circle(image, (point[0], point[1]), 1 + int(index / 2),
-                      (152, 251, 152), 2)
+                    (152, 251, 152), 2)
 
+    return image
+
+
+def draw_info(image, fps, mode):
+    cv2.putText(image, "FPS:" + str(fps), (10, 30), cv2.FONT_HERSHEY_SIMPLEX,
+                1.0, (0, 0, 0), 4, cv2.LINE_AA)
+    cv2.putText(image, "FPS:" + str(fps), (10, 30), cv2.FONT_HERSHEY_SIMPLEX,
+                1.0, (255, 255, 255), 2, cv2.LINE_AA)
+
+    mode_string = [' 1, Key Point', ' 2, Point History']
+    if 1 <= mode <= 2:
+        cv2.putText(image, "MODE:" + mode_string[mode - 1], (10, 90),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1,
+                cv2.LINE_AA)
     return image
 
 
