@@ -34,7 +34,7 @@ class ServiceRecognition:
             min_tracking_confidence=min_trac_confidance,
         )
 
-        self.keypoint_classifier_labels, self.keypoint_history_labels = self._readLabels()
+        self.keypoint_classifier_labels, self. keypoint_history_labels = self._readLabels()
         self.serviceKeyPointClassifier = KeyPointClassifier()
         self.serviceKeyPointHistoryClassifier = PointHistoryClassifier()
         self.point_history = deque(maxlen=Constants.HISTORY_LENGHT)
@@ -91,22 +91,18 @@ class ServiceRecognition:
                         
                     pre_processed_point_history_list = self._preProcessPointHistory(debug_image, self.point_history)
 
+                    finger_gesture_id = -1
                     point_history_len = len(pre_processed_point_history_list)
-                    finger_gesture_id = 0
-                    if point_history_len == (self.point_history):
+                    if point_history_len == (Constants.HISTORY_LENGHT * 2):
                         finger_gesture_id = self.serviceKeyPointHistoryClassifier(pre_processed_point_history_list)
-                        # print("[INFO] finger_gesture_id " + str(finger_gesture_id))
-                        # print("[DEBUG] pre_processed_point_history_list : " + str(pre_processed_point_history_list))
-                        # print("[DEBUG] history_id : " + str(finger_gesture_id))
 
                     debug_image = self._drawPointHistory(image, point_history=self.point_history)
 
-
-                    self.finger_gesture_history.append(finger_gesture_id)
-                    most_common_fg_id = Counter(self.finger_gesture_history).most_common()
-                    # print("[DEBUG] most_common_fg_id : " + str(most_common_fg_id))
-                    # print("[DEBUG] most_common_fg_id : " + str(self.keypoint_history_labels[most_common_fg_id[0][0]]))
-                    prediction = prediction + ', Gesture: ' + str(self.keypoint_history_labels[most_common_fg_id[0][0]])
+                    if finger_gesture_id != -1: 
+                        self.finger_gesture_history.append(finger_gesture_id)
+                        most_common_fg_id = Counter(self.finger_gesture_history).most_common()
+                        print("[DEBUG] most_common_fg_id : " + str(most_common_fg_id))
+                        prediction = prediction + ', Gesture: ' + str(self.keypoint_history_labels[most_common_fg_id[0][0]])
 
                 label = self.keypoint_classifier_labels[hand_sign_id]
                 
@@ -114,7 +110,8 @@ class ServiceRecognition:
                     'label': label,
                     'score': handedness.classification[0].score,
                     'index': handedness.classification[0].index,
-                    'labelHand':  handedness.classification[0].label[0:]
+                    'labelHand':  handedness.classification[0].label[0:],
+                    'versionGesture': finger_gesture_id
                 }
 
 

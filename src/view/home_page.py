@@ -15,11 +15,11 @@ class HomePage(MDApp):
 
     def on_start(self):
          for i in range(3):
-            if i == 0:
-                tab = TabRecognition(title=f"Recognition") # TabRecognition
-                self.root.ids.tabs.add_widget(tab)
-            elif i == 1: 
+            if i == 0: 
                 tab = TabRecognitionArduino(title=f"Recognition+Detection+Arduino")
+                self.root.ids.tabs.add_widget(tab)
+            elif i == 1:
+                tab = TabRecognition(title=f"Recognition")
                 self.root.ids.tabs.add_widget(tab)
             elif i == 2: 
                 tab = TabSettings(title=f"Settings")
@@ -40,6 +40,116 @@ MDBoxLayout:
         id: tabs
         on_tab_switch: app.on_tab_switch(*args)
 
+<TabRecognitionArduino>
+    GridLayout: 
+        rows: 3
+        cols: 1
+       
+        GridLayout: 
+            cols: 3
+            rows: 1
+            
+            Image:
+                size_hint: .9, 0
+                padding: [0, 100, 0, 0]
+                halign: "center"
+                source: '/Users/vincenzo/Documents/Developer/progetto-visione/assets/graphics/shemaArduino.png'
+                
+            GridLayout: 
+                size_hint: .2, .1
+                padding: [0, 130, 0, 0]
+                halign: "center"
+                cols: 1
+                rows: 5
+
+                MDIconButton:
+                    id: led_red
+                    icon: "led-variant-outline"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    md_bg_color: [1, 0, 0, 0.1]
+                    radius: [12, ]
+                
+                MDIconButton:
+                    id: led_green
+                    icon: "led-variant-outline"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    md_bg_color: [0, 1, 0, 0.1]
+                    radius: [12, ]
+
+                MDIconButton:
+                    id: led_blue
+                    icon: "led-variant-outline"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    md_bg_color: [0, 0, 1, 0.1]
+                    radius: [12, ]
+
+                MDIconButton:
+                    id: piezometro
+                    icon: "volume-mute"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    md_bg_color: [1, 1, 1, 0.1]
+                    radius: [24, ]
+
+                # MDProgressBar:
+                #     id: servo_motor
+                #     orientation: "vertical"
+                #     value: 50
+
+                MDIconButton:
+                    id: servo_motor
+                    icon: "sync"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    md_bg_color: [1, 1, 1, 0.1]
+                    radius: [24, ]
+
+
+            KivyCamera:
+                id: camera
+                size_hint_x: None
+                width: 1000
+                halign: "center"
+                pos_hint: {"center_x": .5, "center_y": .5}
+                # size_hint: .9, .1
+        
+        MDLabel:
+            id: labelOutput
+            size_hint_y: None
+            halign: "center"
+            height: 100
+
+        GridLayout: 
+            rows: 1
+            padding: 10
+            spacing: 10
+            valign: 'bottom'
+            halign: 'center'
+            size_hint_y: None
+
+            MDRoundFlatIconButton:
+                icon: "camera"
+                width: dp(250)
+                id: buttonCamera
+                halign: 'center'
+                text: root.buttonCamera
+                on_press: root.onStart()
+
+            MDRoundFlatIconButton:
+                icon: "all-inclusive-box-outline"
+                width: dp(250)
+                id: buttonConnectionArduino
+                halign: 'center'
+                text: root.buttonConnectionArduino
+                disabled: root.isDisabledConnectionArduino
+                on_press: root.onArduino()
+
+            MDRoundFlatIconButton:
+                icon: "allergy"
+                width: dp(250)
+                id: buttonClassification
+                halign: 'center'
+                text: root.buttonClassification
+                disabled: root.isDisabledClassification
+                on_press: root.onClassification()
 <TabRecognition>
     GridLayout: 
         rows: 3
@@ -81,118 +191,6 @@ MDBoxLayout:
             
             MDRoundFlatIconButton:
                 icon: "allergy"
-                id: buttonClassification
-                halign: 'center'
-                text: root.buttonClassification
-                disabled: root.isDisabledClassification
-                on_press: root.onClassification()
-
-<TabRecognitionArduino>
-    GridLayout: 
-        rows: 3
-        cols: 1
-       
-        GridLayout: 
-            cols: 3
-            rows: 1
-            
-            Image:
-                size_hint: .5, .1
-                source: '/Users/vincenzo/Documents/Developer/progetto-visione/assets/graphics/shemaArduino.png'
-                
-            GridLayout: 
-                cols: 1
-                rows: 5
-                size_hint: None, .1
-                
-                MDBoxLayout:
-                    id: led_red
-                    size_hint: .01, .01
-                    height: 5
-                    padding: 10
-                    spacing: 10
-                    md_bg_color: 1, 1, 1, .5
-                    line_color: 0, 0, 1, 1
-                    radius: [24, ]
-                
-                MDBoxLayout:
-                    size_hint: .01, .01
-                    height: 5
-                    padding: 10
-                    spacing: 10
-                    id: led_green
-                    md_bg_color: 1, 1, 1, .5
-                    line_color: 0, 0, 1, 1
-                    radius: [24, ]
-
-                                    
-                MDBoxLayout:
-                    size_hint: .01, .01
-                    height: 5
-                    padding: 10
-                    spacing: 10
-                    id: led_blue
-                    md_bg_color: 1, 1, 1, .5
-                    line_color: 0, 0, 1, 1
-                    radius: [24, ]
-
-                MDIconButton:
-                    id: piezometro
-                    icon: "volume-mute"
-                    pos_hint: {"center_x": .5, "center_y": .5}
-                    line_color: 0, 0, 1, 1
-                    radius: [24, ]
-                
-                MDRectangleFlatIconButton:
-                    orientation: "vertical"
-                    icon: "camera"
-                    size_hint: .01, .01
-                    pos_hint: {"center_x": .5, "center_y": .5}
-                    id: servo_motor
-                    line_color: 0, 0, 1, 1
-                    radius: [24, ]
-
-
-            KivyCamera:
-                id: camera
-                halign: "center"
-                height: 700
-                width: 700
-        
-        MDLabel:
-            id: labelOutput
-            size_hint_y: None
-            halign: "center"
-            height: 100
-
-        GridLayout: 
-            rows: 1
-            padding: 10
-            spacing: 10
-            valign: 'bottom'
-            halign: 'center'
-            size_hint_y: None
-
-            MDRoundFlatIconButton:
-                icon: "camera"
-                width: dp(250)
-                id: buttonCamera
-                halign: 'center'
-                text: root.buttonCamera
-                on_press: root.onStart()
-
-            MDRoundFlatIconButton:
-                icon: "all-inclusive-box-outline"
-                width: dp(250)
-                id: buttonConnectionArduino
-                halign: 'center'
-                text: root.buttonConnectionArduino
-                disabled: root.isDisabledConnectionArduino
-                on_press: root.onArduino()
-
-            MDRoundFlatIconButton:
-                icon: "allergy"
-                width: dp(250)
                 id: buttonClassification
                 halign: 'center'
                 text: root.buttonClassification

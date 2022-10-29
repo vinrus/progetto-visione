@@ -43,51 +43,77 @@ class ServiceArduino:
 
 
     def _handleGenerationJson(self, handedness, data, ids):
-        # print(f'[DEBUG] handedness {str(handedness)}')
+        print(f'[DEBUG] handedness {str(handedness)}')
         self.label = handedness['label']
         self.score = handedness['score']
         self.hand = handedness['labelHand']
+        self.versionGesture = handedness['versionGesture']
         if self.label != '':
-            data['action'] = str(self._readAction(ids))
+            action = str(self._readAction(ids))
+            data['action'] = action
+            if action == 2: 
+                if self.versionGesture == 1 : 
+                    data['version'] = 1
+                else:
+                    data['version'] = 0
         # print(f"[DEBUG] json = {str(data)}")
         return json.dumps(data)
 
     def _readAction(self, ids):
         if self.label == "Finger4":
             # print(f'[DEBUG] Finger4')
-            self._restValue(ids)
+            self._restLed(ids)
             ids.led_blue.md_bg_color = [0, 0, 1, 1]
+            ids.led_blue.icon = "led-variant-on"
             return 5
         elif self.label == "Finger3" : 
             print (f'[DEBUG] Finger3')
-            self._restValue(ids)
+            self._restLed(ids)
             ids.led_green.md_bg_color = [0, 1, 0, 1]
+            ids.led_green.icon = "led-variant-on"
             return 4
         elif self.label == "Finger2" : 
             print (f'[DEBUG] Finger2')
-            self._restValue(ids)
+            self._restLed(ids)
             ids.led_red.md_bg_color = [1, 0, 0, 1]
+            ids.led_red.icon = "led-variant-on"
             return 3
         elif self.label == "Index" : 
-            print (f'[DEBUG] Index')
+            print (f'[DEBUG] Index with : {self.versionGesture}')
             #TODO gira il motore
+            if self.versionGesture == 1 : 
+                # ids.servo_motor.value = 100
+                ids.servo_motor.icon = "restore"
+            else:
+                ids.servo_motor.icon = "reload"
+                # ids.servo_motor.value = 0
             return 2
         elif self.label == "PalmOpen" : 
             print (f'[DEBUG] PalmOpen')
-            self._restValue(ids)
-            ids.led_red.md_bg_color   =  [1, 0, 0, 1]
-            ids.led_green.md_bg_color =  [0, 1, 0, 1]
-            ids.led_blue.md_bg_color  =  [0, 0, 1, 1]
-            ids.piezometro.icon = "volume-vibrate"
+            self._restLed(ids)
+            self._openLed(ids)
             return 1
         elif self.label == "Fist" : 
             print (f'[DEBUG] Fist')
-            self._restValue(ids)
+            self._restLed(ids)
             return 0
 
-    def _restValue(self, ids):
-        ids.led_red.md_bg_color   =  [0, 0, 0, 0]
-        ids.led_green.md_bg_color =  [0, 0, 0, 0]
-        ids.led_blue.md_bg_color  =  [0, 0, 0, 0]
+    def _openLed(self, ids):
+        ids.led_red.md_bg_color   =  [1, 0, 0, 1]
+        ids.led_green.md_bg_color =  [0, 1, 0, 1]
+        ids.led_blue.md_bg_color  =  [0, 0, 1, 1]
+        ids.led_red.icon = "led-variant-on"
+        ids.led_green.icon = "led-variant-on"
+        ids.led_blue.icon = "led-variant-on"
+        ids.piezometro.icon = "volume-vibrate"
+
+    def _restLed(self, ids):
+        ids.led_red.md_bg_color   =  [1, 0, 0, 0.1]
+        ids.led_green.md_bg_color =  [0, 1, 0, 0.1]
+        ids.led_blue.md_bg_color  =  [0, 0, 1, 0.1]
         ids.piezometro.icon = "volume-mute"
+        ids.led_red.icon = "led-variant-outline"
+        ids.led_green.icon = "led-variant-outline"
+        ids.led_blue.icon = "led-variant-outline"
+        ids.servo_motor.icon = "sync"
         

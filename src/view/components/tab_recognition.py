@@ -13,7 +13,7 @@ class TabRecognition(MDFloatLayout, MDTabsBase, BoxLayout):
     buttonCamera = 'Start Camera'
     isCamera = False
 
-    buttonBackground = 'Background Camera'
+    buttonBackground = 'Background subtraction Camera'
     isDisabledBackground  = True
     
     buttonClassification = 'Start Classification'
@@ -47,10 +47,10 @@ class TabRecognition(MDFloatLayout, MDTabsBase, BoxLayout):
         self.isDisabledBackground = not self.isDisabledBackground
         if capture != None and self.isDisabledBackground:
             # print("[DEBUG] background camera")
-            self.ids.buttonBackground.text = str('Not Background Camera')
+            self.ids.buttonBackground.text = str('Not Background subtraction Camera')
             self.ids.camera.isBackgruond = not self.ids.camera.isBackgruond
         else: 
-            self.ids.buttonBackground.text = str('Background Camera')
+            self.ids.buttonBackground.text = str('Background subtraction Camera')
             self.ids.camera.isBackgruond = not self.ids.camera.isBackgruond
 
     def onClassification(self):
@@ -69,7 +69,7 @@ class TabRecognition(MDFloatLayout, MDTabsBase, BoxLayout):
         self.ids.buttonCamera.text = str('Start Camera')
         self.isCamera = False
 
-        self.buttonBackground = 'Background Camera'
+        self.buttonBackground = 'Background subtraction Camera'
         self.ids.buttonBackground.text = str(self.buttonBackground)
         self.isDisabledBackground  = True
         
