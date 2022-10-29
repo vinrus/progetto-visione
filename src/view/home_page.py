@@ -103,42 +103,12 @@ MDBoxLayout:
             GridLayout: 
                 cols: 1
                 rows: 5
-                size_hint: None, .01
+                size_hint: None, .1
                 
                 MDBoxLayout:
+                    id: led_red
                     size_hint: .01, .01
                     height: 5
-                    width: 5
-                    padding: 10
-                    spacing: 10
-                    md_bg_color: 1, 0, 0, .5
-                    line_color: 0, 0, 1, 1
-                    radius: [24, ]
-                    
-                MDBoxLayout:
-                    size_hint: .01, .01
-                    height: 5
-                    width: 5
-                    padding: 10
-                    spacing: 10
-                    md_bg_color: 0, 1, 0, .5
-                    line_color: 0, 0, 1, 1
-                    radius: [24, ]
-                
-                MDBoxLayout:
-                    size_hint: .01, .01
-                    height: 5
-                    width: 5
-                    padding: 10
-                    spacing: 10
-                    md_bg_color: 0, 0, 1, .5
-                    line_color: 0, 0, 1, 1
-                    radius: [24, ]
-                
-                MDBoxLayout:
-                    size_hint: .01, .01
-                    height: 5
-                    width: 5
                     padding: 10
                     spacing: 10
                     md_bg_color: 1, 1, 1, .5
@@ -148,12 +118,40 @@ MDBoxLayout:
                 MDBoxLayout:
                     size_hint: .01, .01
                     height: 5
-                    width: 5
                     padding: 10
                     spacing: 10
+                    id: led_green
                     md_bg_color: 1, 1, 1, .5
                     line_color: 0, 0, 1, 1
                     radius: [24, ]
+
+                                    
+                MDBoxLayout:
+                    size_hint: .01, .01
+                    height: 5
+                    padding: 10
+                    spacing: 10
+                    id: led_blue
+                    md_bg_color: 1, 1, 1, .5
+                    line_color: 0, 0, 1, 1
+                    radius: [24, ]
+
+                MDIconButton:
+                    id: piezometro
+                    icon: "volume-mute"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    line_color: 0, 0, 1, 1
+                    radius: [24, ]
+                
+                MDRectangleFlatIconButton:
+                    orientation: "vertical"
+                    icon: "camera"
+                    size_hint: .01, .01
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    id: servo_motor
+                    line_color: 0, 0, 1, 1
+                    radius: [24, ]
+
 
             KivyCamera:
                 id: camera

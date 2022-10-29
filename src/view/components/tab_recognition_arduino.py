@@ -48,7 +48,7 @@ class TabRecognitionArduino(MDFloatLayout, MDTabsBase):
                 capture.release()
                 capture = None
 
-        print(f"[DEBUG] on Start - {self.buttonCamera} - {str(self.isCamera)}")
+        # print(f"[DEBUG] on Start - {self.buttonCamera} - {str(self.isCamera)}")
 
     def onArduino(self): 
         self.isConnectionArduino = not self.isConnectionArduino
@@ -61,22 +61,22 @@ class TabRecognitionArduino(MDFloatLayout, MDTabsBase):
             self.ids.camera.serviceArduino = self.serviceArduino
             self.ids.camera.isActiveArduino = True
         elif not self.isConnection or Constants.IS_MOCK:
-            print('[DEBUG] isConnection arduino false')
+            # print('[DEBUG] isConnection arduino false')
             self.buttonConnectionArduino = 'Connection Arduino'
             self.ids.camera.isActiveArduino = False
             self.ids.camera.isClassification = False
             self._showAlertConnectionArduino()
         else : 
-            print('[DEBUG] isConnection arduino false and isConnectionArduino false')
+            # print('[DEBUG] isConnection arduino false and isConnectionArduino false')
             self.ids.camera.isActiveArduino = False
             self.ids.camera.isClassification = False
             self.buttonConnectionArduino = 'Connection Arduino'
 
         self.ids.buttonConnectionArduino.text = self.buttonConnectionArduino
-        print(f"[DEBUG] on Arduino - {self.buttonConnectionArduino} - {str(self.isDisabledConnectionArduino)}")
+        # print(f"[DEBUG] on Arduino - {self.buttonConnectionArduino} - {str(self.isDisabledConnectionArduino)}")
 
     def onClassification(self):
-        print(f"[DEBUG] on Start classification? {str(self.isDisabledClassification)}")
+        # print(f"[DEBUG] on Start classification? {str(self.isDisabledClassification)}")
         self.isClassificaiton = not self.isClassificaiton
         if self.isClassificaiton :
             self.buttonClassification = 'Stop Classification'
@@ -88,9 +88,7 @@ class TabRecognitionArduino(MDFloatLayout, MDTabsBase):
 
         self.ids.buttonClassification.text = self.buttonClassification
 
-
-
-        print(f"[DEBUG] on Start - {self.buttonClassification} - {str(self.isDisabledClassification)}")
+        # print(f"[DEBUG] on Start - {self.buttonClassification} - {str(self.isDisabledClassification)}")
 
 
     def _showAlertConnectionArduino(self):

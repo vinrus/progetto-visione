@@ -1,3 +1,6 @@
+from collections import deque
+from collections import Counter
+
 import copy
 
 import csv
@@ -8,6 +11,7 @@ import mediapipe as mp
 import itertools
 import csv
 from services.keypoint_classifier import KeyPointClassifier
+from services.point_history_classifier import PointHistoryClassifier
 
 from utility.constants import Constants
 
@@ -30,13 +34,20 @@ class ServiceRecognition:
             min_tracking_confidence=min_trac_confidance,
         )
 
-        self.keypoint_classifier_labels = self._readLabels()
+        self.keypoint_classifier_labels, self.keypoint_history_labels = self._readLabels()
         self.serviceKeyPointClassifier = KeyPointClassifier()
+        self.serviceKeyPointHistoryClassifier = PointHistoryClassifier()
+        self.point_history = deque(maxlen=Constants.HISTORY_LENGHT)
+        self.finger_gesture_history = deque(maxlen=Constants.HISTORY_LENGHT)
+    
+    
 
-    def startRecognition(self, frame):
+    def startRecognition(self, frame, isArduino):
         prediction = ''
         isLeft = False
         image = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+
+        debug_image = copy.deepcopy(image) # TODO
 
         image.flags.writeable = False
         results = self.hands.process(image)
@@ -68,17 +79,73 @@ class ServiceRecognition:
                     self.keypoint_classifier_labels[hand_sign_id],
                 )
 
+
+
+                print("[INFO] isArduino:  " + str(isArduino))
+                if isArduino: 
+                    if hand_sign_id == 2 : 
+                        print("[INFO] hand_sign_id == 2:  " + str(landmark_list[8]))
+                        self.point_history.append(landmark_list[8])
+                    else:
+                        self.point_history.append([0, 0])
+                        
+                    pre_processed_point_history_list = self._preProcessPointHistory(debug_image, self.point_history)
+
+                    point_history_len = len(pre_processed_point_history_list)
+                    finger_gesture_id = 0
+                    if point_history_len == (self.point_history):
+                        finger_gesture_id = self.serviceKeyPointHistoryClassifier(pre_processed_point_history_list)
+                        # print("[INFO] finger_gesture_id " + str(finger_gesture_id))
+                        # print("[DEBUG] pre_processed_point_history_list : " + str(pre_processed_point_history_list))
+                        # print("[DEBUG] history_id : " + str(finger_gesture_id))
+
+                    debug_image = self._drawPointHistory(image, point_history=self.point_history)
+
+
+                    self.finger_gesture_history.append(finger_gesture_id)
+                    most_common_fg_id = Counter(self.finger_gesture_history).most_common()
+                    # print("[DEBUG] most_common_fg_id : " + str(most_common_fg_id))
+                    # print("[DEBUG] most_common_fg_id : " + str(self.keypoint_history_labels[most_common_fg_id[0][0]]))
+                    prediction = prediction + ', Gesture: ' + str(self.keypoint_history_labels[most_common_fg_id[0][0]])
+
+                label = self.keypoint_classifier_labels[hand_sign_id]
+                
                 handednessResult = {
-                    'label': self.keypoint_classifier_labels[hand_sign_id],
+                    'label': label,
                     'score': handedness.classification[0].score,
                     'index': handedness.classification[0].index,
                     'labelHand':  handedness.classification[0].label[0:]
                 }
-                self.mpDraw.draw_landmarks(
-                    image, hand_landmarks, self.mp_hands.HAND_CONNECTIONS)
+
+
+                self.mpDraw.draw_landmarks(image, hand_landmarks, self.mp_hands.HAND_CONNECTIONS)
+
             frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             
         return frame, prediction, handednessResult, isLeft
+
+
+    def _preProcessPointHistory(self, image, point_history):
+        image_width, image_height = image.shape[1], image.shape[0]
+
+        temp_point_history = copy.deepcopy(point_history)
+
+        # Convert to relative coordinates
+        base_x, base_y = 0, 0
+        for index, point in enumerate(temp_point_history):
+            if index == 0:
+                base_x, base_y = point[0], point[1]
+
+            temp_point_history[index][0] = (temp_point_history[index][0] -
+                                            base_x) / image_width
+            temp_point_history[index][1] = (temp_point_history[index][1] -
+                                            base_y) / image_height
+
+        # Convert to a one-dimensional list
+        temp_point_history = list(
+            itertools.chain.from_iterable(temp_point_history))
+
+        return temp_point_history
 
     def _readLabels(self):
         with open(Constants.PATH_LABEL, encoding='utf-8-sig') as f:
@@ -86,8 +153,14 @@ class ServiceRecognition:
             self.keypoint_classifier_labels = [
                 row[0] for row in self.keypoint_classifier_labels
             ]
-            print(f"[DEBUG] labels: {str(self.keypoint_classifier_labels)}")
-        return self.keypoint_classifier_labels
+            # print(f"[DEBUG] labels: {str(self.keypoint_classifier_labels)}")
+        with open(
+            Constants.PATH_LABEL_HISTORY, encoding='utf-8-sig') as f:
+            self.point_history_classifier_labels = csv.reader(f)
+            self.point_history_classifier_labels = [
+                row[0] for row in self.point_history_classifier_labels
+            ]
+        return self.keypoint_classifier_labels, self.point_history_classifier_labels
 
     def _calcLandmarkList(self, image, landmarks):
         image_width, image_height = image.shape[1], image.shape[0]
@@ -102,7 +175,7 @@ class ServiceRecognition:
 
             landmark_point.append([landmark_x, landmark_y])
 
-        print(f"[DEBUG] landmark_point: {str(landmark_point)}")
+        # print(f"[DEBUG] landmark_point: {str(landmark_point)}")
         return landmark_point
 
     def _preProcessLandmark(self, landmark_list):
@@ -129,7 +202,7 @@ class ServiceRecognition:
 
         temp_landmark_list = list(map(normalize_, temp_landmark_list))
 
-        print(f"[DEBUG] temp_landmark_list: {str(temp_landmark_list)}")
+        # print(f"[DEBUG] temp_landmark_list: {str(temp_landmark_list)}")
         return temp_landmark_list
 
     def _drawBoundingRect(self, image, brect):
@@ -143,12 +216,12 @@ class ServiceRecognition:
         resultPrediction = ''
         isRight = False
 
-        print(f"[DEBUG] hand_sign_text: {str(handedness)}")
+        # print(f"[DEBUG] hand_sign_text: {str(handedness)}")
         info_text = handedness.classification[0].label[0:]
         score = handedness.classification[0].score * 100
 
-        print(f"[DEBUG] score: {str(score)}")
-        print(f"[DEBUG] hand_sign_text: {str(hand_sign_text)}")
+        # print(f"[DEBUG] score: {str(score)}")
+        # print(f"[DEBUG] hand_sign_text: {str(hand_sign_text)}")
 
         if info_text != "Left":
             isRight = True
@@ -158,7 +231,7 @@ class ServiceRecognition:
 
         # cv2.putText(image, resultPrediction , (brect[0] + 5, brect[1] - 4),cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1, cv2.LINE_8)
 
-        print(f"[DEBUG] resultPrediction : {str(resultPrediction )}")
+        # print(f"[DEBUG] resultPrediction : {str(resultPrediction )}")
 
         return image, resultPrediction, isRight
 
@@ -178,3 +251,12 @@ class ServiceRecognition:
         x, y, w, h = cv2.boundingRect(landmark_array)
 
         return [x, y, x + w, y + h]
+
+
+    def _drawPointHistory(self, image, point_history):
+        for index, point in enumerate(point_history):
+            if point[0] != 0 and point[1] != 0:
+                cv2.circle(image, (point[0], point[1]), 1 + int(index / 2),
+                        (152, 251, 152), 2)
+
+        return image

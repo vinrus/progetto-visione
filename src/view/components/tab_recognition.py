@@ -21,7 +21,7 @@ class TabRecognition(MDFloatLayout, MDTabsBase, BoxLayout):
 
     def onCamera(self, *largs):
         global capture
-        print("[DEBUG] start camera")
+        # print("[DEBUG] start camera")
         self.isCamera = not self.isCamera
         if self.isCamera: 
             capture = cv2.VideoCapture(0)
@@ -46,7 +46,7 @@ class TabRecognition(MDFloatLayout, MDTabsBase, BoxLayout):
         global capture
         self.isDisabledBackground = not self.isDisabledBackground
         if capture != None and self.isDisabledBackground:
-            print("[DEBUG] background camera")
+            # print("[DEBUG] background camera")
             self.ids.buttonBackground.text = str('Not Background Camera')
             self.ids.camera.isBackgruond = not self.ids.camera.isBackgruond
         else: 
@@ -54,10 +54,10 @@ class TabRecognition(MDFloatLayout, MDTabsBase, BoxLayout):
             self.ids.camera.isBackgruond = not self.ids.camera.isBackgruond
 
     def onClassification(self):
-        print("[DEBUG] recogntionHandle")
+        # print("[DEBUG] recogntionHandle")
         self.isDisabledClassification = not self.isDisabledClassification
         if self.isDisabledClassification:
-            print("[DEBUG] background camera")
+            # print("[DEBUG] background camera")
             self.ids.buttonClassification.text = str('Stop Classification')
             self.ids.camera.isClassification = self.isDisabledClassification
         else: 

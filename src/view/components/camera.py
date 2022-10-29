@@ -49,7 +49,6 @@ class KivyCamera(Image):
             w, h = frame.shape[1], frame.shape[0]
 
             self.texture = texture = Texture.create(size=(w, h))
-            texture.flip_vertical()
             
             frame, texture = self.handleDetection(frame=frame)
 
@@ -60,7 +59,7 @@ class KivyCamera(Image):
         texture = self.texture
 
         frame = cv2.bilateralFilter(frame, 5, 50, 100)  # smoothing filter
-        frame = cv2.flip(frame, 1)                      # flip the frame horizontally
+        # frame = cv2.flip(frame, 1)                      # flip the frame horizontally
             
         w, h = frame.shape[1], frame.shape[0]
         infoText = ''
@@ -69,13 +68,13 @@ class KivyCamera(Image):
         if not self.isActiveArduino and self.isClassification:
             frame, infoText = self.handlerRecognitionHandle(frame)
         elif self.isClassification:
-            # print("[DEBUG] is active arduino")
+            # # print("[DEBUG] is active arduino")
             frame, infoText, value = self.handlerRecognitionForArduinoHandle(frame)
             if not self.serviceArduino: 
                 print("[DEBUG] is not serviceArduino")
             else:
                 # print("[DEBUG] is  serviceArduino")
-                self.serviceArduino.handleSendValueArduino(value)
+                self.serviceArduino.handleSendValueArduino(value, self.ids)
 
         self.handlerBackgroundMode(frame)
         
@@ -88,7 +87,7 @@ class KivyCamera(Image):
 
     def handlerBackgroundMode(self, frame):
         if self.isBackgruond:
-            # print("[DEBUG] isbackground Active")
+            # # print("[DEBUG] isbackground Active")
             w, h = frame.shape[1], frame.shape[0]
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             # convert it to texture
@@ -105,10 +104,10 @@ class KivyCamera(Image):
         infoText = ''
         isLeft = False
         if self.isClassification:
-            frame, infoText, _, isLeft = self.serviceRecognition.startRecognition(frame)
+            frame, infoText, _, isLeft = self.serviceRecognition.startRecognition(frame, False)
         
-        if isLeft: 
-            infoText = 'Use right hand!!!!' #TODO 
+        # if isLeft: 
+        #     infoText = 'Use right hand!!!!' #TODO 
 
         return frame, infoText
     
@@ -116,7 +115,7 @@ class KivyCamera(Image):
         infoText = ''
         handednessResult = []
         # TODO metodo per un evoluzione della recognition che torna anche la posizione dei punti 
-        frame, infoText, handednessResult, _ = self.serviceRecognition.startRecognition(frame)
+        frame, infoText, handednessResult, _ = self.serviceRecognition.startRecognition(frame, True)
 
         return frame, infoText, handednessResult
 

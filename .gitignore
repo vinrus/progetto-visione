@@ -1,5 +1,4 @@
 
-*.png
 *.jpg
 assets/models/tmp
 assets/models/*.h5

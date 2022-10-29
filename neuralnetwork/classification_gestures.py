@@ -1,5 +1,6 @@
 # using mediapipe tu collect keypoints and save them to the keypoint.csv
 
+from ast import Constant
 from collections import deque
 import csv
 import cv2
@@ -10,8 +11,10 @@ import sys
 
 import argparse
 
+
 sys.path.append('src')
-from utility.keypoint_classifier import KeyPointClassifier
+from utility.constants import Constants
+from services.keypoint_classifier import KeyPointClassifier
 from utility.calcFps import CalcFps
 
 # camera shapes
@@ -48,7 +51,7 @@ def main(mode):
         min_tracking_confidence=min_trac_confidance,
     )
 
-    keypoint_classifier = KeyPointClassifier()
+    keypoint_classifier = KeyPointClassifier(model_path=Constants.PATH_MODEL_TEST)
 
     # FPS
     frameCount = CalcFps(buffer_len=10)
@@ -168,12 +171,12 @@ def write_on_csv(number, mode, landmark_list, point_history_list):
         with open(csv_path_r, 'a', newline="") as f:
                 writer = csv.writer(f)
                 writer.writerow([number, *landmark_list])
-                print(f"[DEBUG] point saved for mode: {mode}")
+                # print(f"[DEBUG] point saved for mode: {mode}")
     if mode == 2 and  (0 <= number <= 9):
         with open(csv_path_h, 'a', newline="") as f:
             writer = csv.writer(f)
             writer.writerow([number, *point_history_list])
-            print(f"[DEBUG] point history saved for mode: {mode}")
+            # print(f"[DEBUG] point history saved for mode: {mode}")
     return
 
 
@@ -218,10 +221,10 @@ def draw_info(image, fps, mode):
 
 def get_key_mode():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", type=int)
+    parser.add_argument("--mode", type=int, default=2)
     args = parser.parse_args()
     mode = args.mode
-    print(f"[DEBUG] mode selected : {mode}")
+    # print(f"[DEBUG] mode selected : {mode}")
     return mode
 
 
