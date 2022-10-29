@@ -9,7 +9,6 @@ from kivymd.uix.button import MDFlatButton
 from services.service_arduino import ServiceArduino
 from utility.constants import Constants
 
-
 class TabRecognitionArduino(MDFloatLayout, MDTabsBase):
     buttonCamera = 'Start Camera'
     isCamera = False
@@ -25,6 +24,12 @@ class TabRecognitionArduino(MDFloatLayout, MDTabsBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.serviceArduino = ServiceArduino()
+
+    def draw_filled(self, s, icon):
+        s.draw(icon)
+
+    def draw_path(self, s, icon):
+        s.draw(icon, fill=False, line_width=1)
 
     def onStart(self, *largs):
         global capture

@@ -61,7 +61,7 @@ class ServiceRecognition:
 
                 # Drawing part
                 debug_image = self._drawBoundingRect(image, brect)
-                debug_image, prediction = self._drawInfoText(
+                debug_image, prediction, isLeft = self._drawInfoText(
                     debug_image,
                     brect,
                     handedness,
@@ -77,7 +77,8 @@ class ServiceRecognition:
                 self.mpDraw.draw_landmarks(
                     image, hand_landmarks, self.mp_hands.HAND_CONNECTIONS)
             frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        return frame, prediction, handednessResult
+            
+        return frame, prediction, handednessResult, isLeft
 
     def _readLabels(self):
         with open(Constants.PATH_LABEL, encoding='utf-8-sig') as f:
@@ -159,7 +160,7 @@ class ServiceRecognition:
 
         print(f"[DEBUG] resultPrediction : {str(resultPrediction )}")
 
-        return image, resultPrediction
+        return image, resultPrediction, isRight
 
     def _calcBoundingRect(self, image, landmarks):
         image_width, image_height = image.shape[1], image.shape[0]

@@ -103,12 +103,12 @@ class KivyCamera(Image):
 
     def handlerRecognitionHandle(self, frame):
         infoText = ''
-        # isLeft = False
+        isLeft = False
         if self.isClassification:
-            frame, infoText, _ = self.serviceRecognition.startRecognition(frame)
+            frame, infoText, _, isLeft = self.serviceRecognition.startRecognition(frame)
         
-        # if isLeft: 
-        #     infoText = 'Use right hand!!!!' #TODO 
+        if isLeft: 
+            infoText = 'Use right hand!!!!' #TODO 
 
         return frame, infoText
     
@@ -116,7 +116,7 @@ class KivyCamera(Image):
         infoText = ''
         handednessResult = []
         # TODO metodo per un evoluzione della recognition che torna anche la posizione dei punti 
-        frame, infoText, handednessResult = self.serviceRecognition.startRecognition(frame)
+        frame, infoText, handednessResult, _ = self.serviceRecognition.startRecognition(frame)
 
         return frame, infoText, handednessResult
 

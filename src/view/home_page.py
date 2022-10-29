@@ -92,9 +92,74 @@ MDBoxLayout:
         rows: 3
         cols: 1
        
-        KivyCamera:
-            id: camera
-            halign: "center"
+        GridLayout: 
+            cols: 3
+            rows: 1
+            
+            Image:
+                size_hint: .5, .1
+                source: '/Users/vincenzo/Documents/Developer/progetto-visione/assets/graphics/shemaArduino.png'
+                
+            GridLayout: 
+                cols: 1
+                rows: 5
+                size_hint: None, .01
+                
+                MDBoxLayout:
+                    size_hint: .01, .01
+                    height: 5
+                    width: 5
+                    padding: 10
+                    spacing: 10
+                    md_bg_color: 1, 0, 0, .5
+                    line_color: 0, 0, 1, 1
+                    radius: [24, ]
+                    
+                MDBoxLayout:
+                    size_hint: .01, .01
+                    height: 5
+                    width: 5
+                    padding: 10
+                    spacing: 10
+                    md_bg_color: 0, 1, 0, .5
+                    line_color: 0, 0, 1, 1
+                    radius: [24, ]
+                
+                MDBoxLayout:
+                    size_hint: .01, .01
+                    height: 5
+                    width: 5
+                    padding: 10
+                    spacing: 10
+                    md_bg_color: 0, 0, 1, .5
+                    line_color: 0, 0, 1, 1
+                    radius: [24, ]
+                
+                MDBoxLayout:
+                    size_hint: .01, .01
+                    height: 5
+                    width: 5
+                    padding: 10
+                    spacing: 10
+                    md_bg_color: 1, 1, 1, .5
+                    line_color: 0, 0, 1, 1
+                    radius: [24, ]
+                
+                MDBoxLayout:
+                    size_hint: .01, .01
+                    height: 5
+                    width: 5
+                    padding: 10
+                    spacing: 10
+                    md_bg_color: 1, 1, 1, .5
+                    line_color: 0, 0, 1, 1
+                    radius: [24, ]
+
+            KivyCamera:
+                id: camera
+                halign: "center"
+                height: 700
+                width: 700
         
         MDLabel:
             id: labelOutput
