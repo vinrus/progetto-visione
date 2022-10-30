@@ -23,14 +23,20 @@ class ServiceArduino:
 
 
     def handleSendValueArduino(self, handedness, ids):
-        data = {}
-        json_data = {}
+        data = []
+        json_data = []
         if handedness != []:
             json_data = self._handleGenerationJson(handedness, data, ids)
             print(f"[DEBUG] json_data = {str(json_data)}")
             if self.arduino != None and self.arduino.isOpen() and json_data != {} : 
                 print(f"[DEBUG] write jsonData = {str(json_data)}")
-                self.arduino.write(json_data.encode('ascii'))
+                stringa = ''
+                for i in json_data:
+                    stringa += str(i)
+                    stringa += ','
+                stringa = stringa[:-1]
+                print("s", stringa.encode())
+                self.arduino.write(stringa.encode())
 
 
     def _handleGenerationJson(self, handedness, data, ids):
@@ -40,18 +46,21 @@ class ServiceArduino:
         self.hand = handedness['labelHand']
         self.versionGesture = handedness['versionGesture']
         if self.label != '':
-            action = str(self._readAction(ids))
-            data['a'] = action
+            action = self._readAction(ids)
+            version = ''
             # data['action'] = action
             if self.label == 'Fist': 
                 if self.versionGesture == 1 : 
-                    data['v'] = 1
+                    # data['v'] = 1
                     # data['version'] = 1
+                    version = '1'
                 else:
-                    data['v'] = 0
+                    # data['v'] = 0
                     # data['version'] = 0
-        print(f"[DEBUG] json = {str(data)}")
-        return json.dumps(data)
+                    version = '0'
+            data = [str(action), str(version)]
+        print(f"[DEBUG] array = {str(data)}")
+        return data
 
     def _readAction(self, ids):
         if self.label == "Finger4":
