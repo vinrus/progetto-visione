@@ -6,6 +6,7 @@ from utility.constants import Constants
 
 
 class ServiceArduino:
+    count = 0
     def handleConnectionArduino(self):
         try:
             self.arduino = serial.Serial(port=Constants.PORT_ARDUINO,
@@ -48,15 +49,13 @@ class ServiceArduino:
         if self.label != '':
             action = self._readAction(ids)
             version = ''
-            # data['action'] = action
-            if self.label == 'Fist': 
+            self.count += 1
+            print(f'[DEBUG] self.count {str(self.count)}')
+            if self.label == 'Fist' and self.count > 5 : 
+                self.count = 0
                 if self.versionGesture == 1 : 
-                    # data['v'] = 1
-                    # data['version'] = 1
                     version = '1'
                 else:
-                    # data['v'] = 0
-                    # data['version'] = 0
                     version = '0'
             data = [str(action), str(version)]
         print(f"[DEBUG] array = {str(data)}")

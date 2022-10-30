@@ -9,7 +9,7 @@ class Constants:
     PATH_SVG = '../assets/graphics/shemaArduino.svg'
 
     #ARUDINO
-    PORT_ARDUINO = '/dev/cu.usbmodem142201'#'COM1'
+    PORT_ARDUINO = '/dev/cu.usbmodem141201'#'COM1'
     BAUDRATE_ARUDINO  = 115200
     TIMEOUT_ARUDINO  = 0.1
     

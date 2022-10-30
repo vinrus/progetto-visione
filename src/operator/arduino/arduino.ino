@@ -5,7 +5,10 @@ Servo servoMotor;
 int notes[] = { 262, 294, 330, 349, 362 };
 int timerNote = 120;
 
-int input[2]; // dati da python
+int pos = 0;
+int isMouveServo = false;
+
+int input[2];  // dati da python
 
 void setup() {
   // put your setup code here, to run once:
@@ -80,12 +83,12 @@ void readArrayInput() {
   while (Serial.available() >= 1) {
     for (int i = 0; i < 2; i++) {
       input[i] = Serial.parseInt();
-      Serial.println("[DEBUG] input  : ");
-      Serial.print(" posizione ");
-      Serial.print(i);
-      Serial.print(" valore ");
-      Serial.print(input[i]);
-      Serial.println("");
+      // Serial.println("[DEBUG] input  : ");
+      // Serial.print(" posizione ");
+      // Serial.print(i);
+      // Serial.print(" valore ");
+      // Serial.print(input[i]);
+      // Serial.println("");
     }
     gestionAction(input[0], input[1]);
   }
@@ -93,46 +96,55 @@ void readArrayInput() {
 
 void gestionAction(int action, int version) {
   switch (action) {
-  case 0:
-    Serial.println("case 0");
-    settingLedOff();
-    tone(7, notes[0], timerNote);
-    break;
-  case 1:
-    Serial.println("case 1");
-    settingLedOff();
-    settingLedOn();
-    tone(7, notes[1], timerNote);
-    break;
-  case 2:
-    Serial.println("case 2");
-    settingLedOff();
-    // int version = jsonInput["v"];
-
-    if (version == 1) { //senso orario
-      servoMotor.write(0);   
-      delay(100);            
-      servoMotor.write(360);  
-    } else { //senso antiorario
-      servoMotor.write(360);   
-      delay(100);            
-      servoMotor.write(0);          
-    }
-    break;
-  case 3:
-    Serial.println("case 3 led red");
-    settingLedOff();
-    digitalWrite(13, HIGH);
-    break;
-  case 4:
-    Serial.println("case 4 led green");
-    settingLedOff();
-    digitalWrite(12, HIGH);
-    break;
-  case 5:
-    Serial.println("case 5 led blue");
-    settingLedOff();
-    digitalWrite(11, HIGH);
-    break;
-}
+    case 0:
+      Serial.println("case 0");
+      settingLedOff();
+      tone(7, notes[0], timerNote);
+      break;
+    case 1:
+      Serial.println("case 1");
+      settingLedOff();
+      settingLedOn();
+      tone(7, notes[1], timerNote);
+      break;
+    case 2:
+      Serial.println("case 2");
+      settingLedOff();
+      // int version = jsonInput["v"];
+      if (!isMouveServo && version == 1) {  //senso orario
+        isMouveServo = true;
+        Serial.println("isMouveServo = false and pos = 0");
+        for (pos = 0; pos <= 180; pos += 1) {  // goes from 0 degrees to 180 degrees
+          // in steps of 1 degree
+          servoMotor.write(pos);  // tell servo to go to position in variable 'pos'
+          delay(15);              // waits 15ms for the servo to reach the position
+        }
+        isMouveServo = false;
+      } else if (!isMouveServo && version == 0) {  //senso antiorario
+       isMouveServo = true;
+        Serial.println("isMouveServo = false and pos = 180");
+        for (pos = 180; pos <= 0; pos -= 1) {  // goes from 0 degrees to 180 degrees
+          // in steps of 1 degree
+          servoMotor.write(pos);  // tell servo to go to position in variable 'pos'
+          delay(15);              // waits 15ms for the servo to reach the position
+        }
+        isMouveServo = false;
+      }
+      break;
+    case 3:
+      Serial.println("case 3 led red");
+      settingLedOff();
+      digitalWrite(13, HIGH);
+      break;
+    case 4:
+      Serial.println("case 4 led green");
+      settingLedOff();
+      digitalWrite(12, HIGH);
+      break;
+    case 5:
+      Serial.println("case 5 led blue");
+      settingLedOff();
+      digitalWrite(11, HIGH);
+      break;
+  }
 }
