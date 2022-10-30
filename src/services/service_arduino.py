@@ -82,11 +82,9 @@ class ServiceArduino:
             print (f'[DEBUG] Index with : {self.versionGesture}')
             #TODO gira il motore
             if self.versionGesture == 1 : 
-                # ids.servo_motor.value = 100
                 ids.servo_motor.icon = "restore"
             else:
                 ids.servo_motor.icon = "reload"
-                # ids.servo_motor.value = 0
             return 2
         elif self.label == "PalmOpen" : 
             print (f'[DEBUG] PalmOpen')
