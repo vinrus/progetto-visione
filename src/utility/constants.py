@@ -9,11 +9,11 @@ class Constants:
     PATH_SVG = '../assets/graphics/shemaArduino.svg'
 
     #ARUDINO
-    PORT_ARDUINO = 'COM1'
-    BAUDRATE_ARUDINO  = 19200
+    PORT_ARDUINO = '/dev/cu.usbmodem142101'#'COM1'
+    BAUDRATE_ARUDINO  = 115200
     TIMEOUT_ARUDINO  = 0.1
     
     HISTORY_LENGHT = 20
 
     ##MOCK
-    IS_MOCK  = True
+    IS_MOCK  = False

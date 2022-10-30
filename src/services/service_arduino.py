@@ -1,4 +1,3 @@
-import csv
 import json
 import serial
 from serial import SerialException
@@ -7,39 +6,31 @@ from utility.constants import Constants
 
 
 class ServiceArduino:
-    def __init__(self) -> None:
-        # print("[DEBUG] service arduino")
-        self.labels = self._readLabels()
-
-
     def handleConnectionArduino(self):
         try:
             self.arduino = serial.Serial(port=Constants.PORT_ARDUINO,
                                         baudrate=Constants.BAUDRATE_ARUDINO,
-                                        timeout=Constants.TIMEOUT_ARUDINO)
+                                        parity=serial.PARITY_NONE, 
+                                        bytesize=serial.EIGHTBITS, 
+                                        stopbits=serial.STOPBITS_ONE
+                                        )
             return True
-        except SerialException:
+        except SerialException as ex:
+            self.arduino = None
             print('[ERROR] port already open')
+            print(f'[ERROR] error: {ex}')
             return False
 
-    def _readLabels(self):
-        with open(Constants.PATH_LABEL, encoding='utf-8-sig') as f:
-            keypoint_classifier_labels = csv.reader(f)
-            keypoint_classifier_labels = [
-                row[0] for row in keypoint_classifier_labels
-            ]
-        return keypoint_classifier_labels
 
     def handleSendValueArduino(self, handedness, ids):
         data = {}
+        json_data = {}
         if handedness != []:
             json_data = self._handleGenerationJson(handedness, data, ids)
-            # print(f"[DEBUG] json_data = {str(json_data)}")
-
-        # if self.arduino.isOpen(): # TODO
-            # self.arduino.write(bytes(json_data, "utf-8"))
-
-        
+            print(f"[DEBUG] json_data = {str(json_data)}")
+            if self.arduino != None and self.arduino.isOpen() and json_data != {} : 
+                print(f"[DEBUG] write jsonData = {str(json_data)}")
+                self.arduino.write(json_data.encode('ascii'))
 
 
     def _handleGenerationJson(self, handedness, data, ids):
@@ -50,13 +41,16 @@ class ServiceArduino:
         self.versionGesture = handedness['versionGesture']
         if self.label != '':
             action = str(self._readAction(ids))
-            data['action'] = action
-            if action == 2: 
+            data['a'] = action
+            # data['action'] = action
+            if self.label == 'Fist': 
                 if self.versionGesture == 1 : 
-                    data['version'] = 1
+                    data['v'] = 1
+                    # data['version'] = 1
                 else:
-                    data['version'] = 0
-        # print(f"[DEBUG] json = {str(data)}")
+                    data['v'] = 0
+                    # data['version'] = 0
+        print(f"[DEBUG] json = {str(data)}")
         return json.dumps(data)
 
     def _readAction(self, ids):

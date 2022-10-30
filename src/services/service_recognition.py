@@ -82,32 +82,10 @@ class ServiceRecognition:
 
 
                 print("[INFO] isArduino:  " + str(isArduino))
-                if isArduino: 
-                    if hand_sign_id == 2 : 
-                        print("[INFO] hand_sign_id == 2:  " + str(landmark_list[8]))
-                        self.point_history.append(landmark_list[8])
-                    else:
-                        self.point_history.append([0, 0])
-                        
-                    pre_processed_point_history_list = self._preProcessPointHistory(debug_image, self.point_history)
-
-                    finger_gesture_id = -1
-                    point_history_len = len(pre_processed_point_history_list)
-                    if point_history_len == (Constants.HISTORY_LENGHT * 2):
-                        finger_gesture_id = self.serviceKeyPointHistoryClassifier(pre_processed_point_history_list)
-
-                    debug_image = self._drawPointHistory(image, point_history=self.point_history)
-
-                    if finger_gesture_id != -1: 
-                        self.finger_gesture_history.append(finger_gesture_id)
-                        most_common_fg_id = Counter(self.finger_gesture_history).most_common()
-                        print("[DEBUG] most_common_fg_id : " + str(most_common_fg_id))
-                        prediction = prediction + ', Gesture: ' + str(self.keypoint_history_labels[most_common_fg_id[0][0]])
-
-                label = self.keypoint_classifier_labels[hand_sign_id]
-                
+                prediction, finger_gesture_id = self.gestionArduinoConncetion(isArduino, prediction, image, debug_image, landmark_list, hand_sign_id)
+               
                 handednessResult = {
-                    'label': label,
+                    'label': self.keypoint_classifier_labels[hand_sign_id],
                     'score': handedness.classification[0].score,
                     'index': handedness.classification[0].index,
                     'labelHand':  handedness.classification[0].label[0:],
@@ -120,6 +98,32 @@ class ServiceRecognition:
             frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             
         return frame, prediction, handednessResult, isLeft
+
+    def gestionArduinoConncetion(self, isArduino, prediction, image, debug_image, landmark_list, hand_sign_id):
+        if isArduino: 
+            if hand_sign_id == 2 : 
+                print("[INFO] hand_sign_id == 2:  " + str(landmark_list[8]))
+                self.point_history.append(landmark_list[8])
+            else:
+                self.point_history.append([0, 0])
+                        
+            pre_processed_point_history_list = self._preProcessPointHistory(debug_image, self.point_history)
+
+            finger_gesture_id = -1
+            point_history_len = len(pre_processed_point_history_list)
+            if point_history_len == (Constants.HISTORY_LENGHT * 2):
+                finger_gesture_id = self.serviceKeyPointHistoryClassifier(pre_processed_point_history_list)
+
+            debug_image = self._drawPointHistory(image, point_history=self.point_history)
+
+            if finger_gesture_id != -1: 
+                self.finger_gesture_history.append(finger_gesture_id)
+                most_common_fg_id = Counter(self.finger_gesture_history).most_common()
+                        # print("[DEBUG] most_common_fg_id : " + str(most_common_fg_id))
+                if prediction != '':
+                    prediction = prediction + ', Gesture: ' + str(self.keypoint_history_labels[most_common_fg_id[0][0]])
+                
+        return prediction,finger_gesture_id
 
 
     def _preProcessPointHistory(self, image, point_history):
@@ -253,7 +257,5 @@ class ServiceRecognition:
     def _drawPointHistory(self, image, point_history):
         for index, point in enumerate(point_history):
             if point[0] != 0 and point[1] != 0:
-                cv2.circle(image, (point[0], point[1]), 1 + int(index / 2),
-                        (152, 251, 152), 2)
-
+                cv2.circle(image, (point[0], point[1]), 1 + int(index / 2), (152, 251, 152), 2)
         return image
