@@ -121,7 +121,7 @@ class KivyCamera(Image):
 
         # if isLeft: 
         #     infoText = 'Use right hand!!!!' #TODO 
-        if infoText != '' and  infoText.find("Index") : 
+        if infoText != '' and  infoText.find("Index") != -1  and gesture != '': 
             infoText = infoText + " Gesture : " + gesture
 
         return frame, infoText
