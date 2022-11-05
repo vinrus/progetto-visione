@@ -178,6 +178,14 @@ MDBoxLayout:
 
             MDRoundFlatIconButton:
                 icon: "checkerboard"
+                id: buttonGrayScale
+                halign: 'center'
+                text: root.buttonGrayScale
+                disabled: True
+                on_press: root.onGrayScale()
+            
+            MDRoundFlatIconButton:
+                icon: "checkerboard"
                 id: buttonBackground
                 halign: 'center'
                 text: root.buttonBackground

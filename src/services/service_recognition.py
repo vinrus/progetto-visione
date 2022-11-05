@@ -80,7 +80,7 @@ class ServiceRecognition:
                     self.keypoint_classifier_labels[hand_sign_id],
                 )
 
-                print("[INFO] isArduino:  " + str(isArduino))
+                # print("[INFO] isArduino:  " + str(isArduino))
                 prediction, finger_gesture_id, gesture = self.gestionArduinoConncetion(isArduino, prediction, image, debug_image, landmark_list, hand_sign_id)
                
                 handednessResult = {
@@ -100,6 +100,7 @@ class ServiceRecognition:
 
     def gestionArduinoConncetion(self, isArduino, prediction, image, debug_image, landmark_list, hand_sign_id):
         gesture = ''
+        finger_gesture_id = -1
         if isArduino: 
             if hand_sign_id == 2 : 
                 print("[INFO] hand_sign_id == 2:  " + str(landmark_list[8]))
@@ -109,7 +110,6 @@ class ServiceRecognition:
                         
             pre_processed_point_history_list = self._preProcessPointHistory(debug_image, self.point_history)
 
-            finger_gesture_id = -1
             point_history_len = len(pre_processed_point_history_list)
             if point_history_len == (Constants.HISTORY_LENGHT * 2):
                 finger_gesture_id = self.serviceKeyPointHistoryClassifier(pre_processed_point_history_list)

@@ -18,7 +18,8 @@ class KivyCamera(Image):
     img_counter = 500
 
     isClassification = False
-    isBackgruond = False
+    isGrayScale = False
+    isBackground = False
     
     isActiveArduino = False
     value = []
@@ -76,7 +77,8 @@ class KivyCamera(Image):
                 # print("[DEBUG] is  serviceArduino")
                 self.serviceArduino.handleSendValueArduino(value, self.ids)
 
-        self.handlerBackgroundMode(frame)
+        self.handlerGrayScaleMode(frame)
+        self.handlerBackgroungMode(frame)
         
         if infoText != '' : 
             self.ids.labelOutput.text = f'Prediction: {infoText}'
@@ -85,17 +87,28 @@ class KivyCamera(Image):
         
         return frame,texture
 
-    def handlerBackgroundMode(self, frame):
-        if self.isBackgruond:
+    def handlerGrayScaleMode(self, frame):
+        if self.isGrayScale:
             # # print("[DEBUG] isbackground Active")
             w, h = frame.shape[1], frame.shape[0]
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            buf1 = cv2.flip(gray, 0)
+            buf = buf1.tobytes()
+            texture1 = Texture.create(size=(w,h), colorfmt='luminance')  # in grayscale gibts kein bgr
+            texture1.blit_buffer(buf, colorfmt='luminance', bufferfmt='ubyte')  # replacing texture
+            self.texture = texture1
+   
+    def handlerBackgroungMode(self, frame):
+        if self.isBackground:
+            w, h = frame.shape[1], frame.shape[0]
+
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             # convert it to texture
             (thresh, im_bw) = cv2.threshold(gray, 127,255,cv2.THRESH_BINARY)
 
             buf1 = cv2.flip(im_bw, 0)
             buf = buf1.tobytes()
-            
+
             texture1 = Texture.create(size=(w,h), colorfmt='luminance')  # in grayscale gibts kein bgr
             texture1.blit_buffer(buf, colorfmt='luminance', bufferfmt='ubyte')  # replacing texture
             self.texture = texture1
