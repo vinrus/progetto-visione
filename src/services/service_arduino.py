@@ -25,22 +25,24 @@ class ServiceArduino:
 
     def handleSendValueArduino(self, handedness, ids):
         data = []
-        json_data = []
+        array_data = []
         if handedness != []:
-            json_data = self._handleGenerationJson(handedness, data, ids)
-            print(f"[DEBUG] json_data = {str(json_data)}")
-            if self.arduino != None and self.arduino.isOpen() and json_data != {} : 
-                print(f"[DEBUG] write jsonData = {str(json_data)}")
+            array_data = self._handleGenerationArray(handedness, data, ids)
+            print(f"[DEBUG] array_data = {str(array_data)}")
+            if self.arduino != None and self.arduino.isOpen() and array_data != {} : 
+                print(f"[DEBUG] write jsonData = {str(array_data)}")
                 stringa = ''
-                for i in json_data:
+                for i in array_data:
                     stringa += str(i)
                     stringa += ','
-                stringa = stringa[:-1]
-                print("s", stringa.encode())
-                self.arduino.write(stringa.encode())
+                # stringa = stringa[:-1]
+                # arduino.write(bytes(x, 'utf-8'))
+                encoding = str(stringa).encode('utf-8')
+                print("[DEBUG] array_data: ", encoding)
+                self.arduino.write(encoding)
 
 
-    def _handleGenerationJson(self, handedness, data, ids):
+    def _handleGenerationArray(self, handedness, data, ids):
         print(f'[DEBUG] handedness {str(handedness)}')
         self.label = handedness['label']
         self.score = handedness['score']
@@ -48,15 +50,17 @@ class ServiceArduino:
         self.versionGesture = handedness['versionGesture']
         if self.label != '':
             action = self._readAction(ids)
-            version = ''
-            self.count += 1
+            version = '0'
+            self.count = self.count + 1
             print(f'[DEBUG] self.count {str(self.count)}')
-            if self.label == 'Fist' and self.count > 5 : 
-                self.count = 0
-                if self.versionGesture == 1 : 
-                    version = '1'
-                else:
-                    version = '0'
+            if self.count > 10 : 
+                if self.label == 'Index' : 
+                    self.count = 0
+                    if self.versionGesture == 1 : 
+                        version = '1'
+                    elif self.versionGesture == 0:
+                        version = '2'
+                
             data = [str(action), str(version)]
         print(f"[DEBUG] array = {str(data)}")
         return data

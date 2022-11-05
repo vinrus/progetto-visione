@@ -90,11 +90,6 @@ MDBoxLayout:
                     md_bg_color: [1, 1, 1, 0.1]
                     radius: [24, ]
 
-                # MDProgressBar:
-                #     id: servo_motor
-                #     orientation: "vertical"
-                #     value: 50
-
                 MDIconButton:
                     id: servo_motor
                     icon: "sync"

@@ -28,7 +28,6 @@ class PointHistoryClassifier(object):
         self,
         point_history,
     ):
-        print("[INFO] pointHistory: " + str(point_history))
         input_details_tensor_index = self.input_details[0]['index']
         self.interpreter.set_tensor(
             input_details_tensor_index,

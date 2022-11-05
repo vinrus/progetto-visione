@@ -53,6 +53,7 @@ class ServiceRecognition:
         results = self.hands.process(image)
         image.flags.writeable = True
         handednessResult = []
+        gesture = ''
         # TODO mettere in comune con la parte per la creazione del dataset ???
         if results.multi_hand_landmarks is not None:
             # Bounding box calculation
@@ -79,10 +80,8 @@ class ServiceRecognition:
                     self.keypoint_classifier_labels[hand_sign_id],
                 )
 
-
-
                 print("[INFO] isArduino:  " + str(isArduino))
-                prediction, finger_gesture_id = self.gestionArduinoConncetion(isArduino, prediction, image, debug_image, landmark_list, hand_sign_id)
+                prediction, finger_gesture_id, gesture = self.gestionArduinoConncetion(isArduino, prediction, image, debug_image, landmark_list, hand_sign_id)
                
                 handednessResult = {
                     'label': self.keypoint_classifier_labels[hand_sign_id],
@@ -97,9 +96,10 @@ class ServiceRecognition:
 
             frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             
-        return frame, prediction, handednessResult, isLeft
+        return frame, prediction, handednessResult, isLeft, gesture
 
     def gestionArduinoConncetion(self, isArduino, prediction, image, debug_image, landmark_list, hand_sign_id):
+        gesture = ''
         if isArduino: 
             if hand_sign_id == 2 : 
                 print("[INFO] hand_sign_id == 2:  " + str(landmark_list[8]))
@@ -119,11 +119,10 @@ class ServiceRecognition:
             if finger_gesture_id != -1: 
                 self.finger_gesture_history.append(finger_gesture_id)
                 most_common_fg_id = Counter(self.finger_gesture_history).most_common()
-                        # print("[DEBUG] most_common_fg_id : " + str(most_common_fg_id))
-                if prediction != '':
-                    prediction = prediction + ', Gesture: ' + str(self.keypoint_history_labels[most_common_fg_id[0][0]])
+                # print("[DEBUG] most_common_fg_id : " + str(most_common_fg_id))
+                gesture = str(self.keypoint_history_labels[most_common_fg_id[0][0]])
                 
-        return prediction,finger_gesture_id
+        return prediction, finger_gesture_id, gesture 
 
 
     def _preProcessPointHistory(self, image, point_history):
