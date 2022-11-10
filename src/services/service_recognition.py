@@ -14,9 +14,21 @@ from services.keypoint_classifier import KeyPointClassifier
 from services.point_history_classifier import PointHistoryClassifier
 
 from utility.constants import Constants
-
+from collections import deque
+import math
 
 class ServiceRecognition:
+
+    center = deque(maxlen = 2)
+    point_1 = deque(maxlen = 2)
+    point_2 = deque(maxlen= 2)
+    last_angle_2 = 0
+    angle_deg = 0
+    last_reverse_angle = 0
+    first_reverse = False
+    half_turn = False
+    list_xy = deque(maxlen = 5)
+    first = True
 
     def __init__(self) -> None:
         min_det_confidance = 0.7
@@ -100,13 +112,50 @@ class ServiceRecognition:
 
     def gestionArduinoConncetion(self, isArduino, prediction, image, debug_image, landmark_list, hand_sign_id):
         gesture = ''
+        angle_2 = 0
         finger_gesture_id = -1
         if isArduino: 
             if hand_sign_id == 2 : 
                 print("[INFO] hand_sign_id == 2:  " + str(landmark_list[8]))
                 self.point_history.append(landmark_list[8])
+                if self.first == True:
+                    # Center Point
+                    self.center.append(landmark_list[7][0])
+                    self.center.append(landmark_list[7][1])
+                    # point 0
+                    self.point_1.append(self.center[0])
+                    self.point_1.append(self.center[1] -20)
+                    # point 180
+                    self.point_2.append(self.center[0])
+                    self.point_2.append(self.center[1] +20)
+                    
+                    self.first = False  
+                self.list_xy.append((landmark_list[8][0], landmark_list[8][1]))       
+                cv2.circle(image, (self.center[0], self.center[1]), 1 + 5,(255, 0, 0), 2)         
+                angle_1 = math.atan2(self.point_1[1] - self.center[1], self.point_1[0] - self.center[0]) * 180 / math.pi
+                if len(self.list_xy) == 5:
+                    angle_2 = math.atan2(self.list_xy[4][1] - self.center[1], self.list_xy[4][0] - self.center[0])  * 180 / math.pi 
+                    first_angle_2 = math.atan2(self.list_xy[0][1] - self.center[1], self.list_xy[0][0] - self.center[0])  * 180 / math.pi
+                    if len(self.point_2) != 0 and angle_2 < angle_1:
+                        angle_180 = math.atan2(self.point_2[1] - self.center[1], self.point_2[0] - self.center[0]) * 180 / math.pi
+                        if angle_180 > angle_2: 
+                            angle_2 = self.last_angle_2 + (self.last_angle_2 + angle_2) 
+                        if angle_2 < first_angle_2:
+                            if not self.first_reverse:
+                                self.last_reverse_angle = -360-angle_1 
+                                self.first_reverse = True        
+                            dist_angle_2 = self.last_reverse_angle - angle_2
+                            angle_2 =abs(self.last_reverse_angle + (dist_angle_2))
+                    else:
+                        self.last_angle_2 = angle_2 
+                    self.angle_deg = abs(angle_1 - angle_2)
+                cv2.putText(image, "DEG:" + str(int(self.angle_deg)), (10, 30), cv2.FONT_HERSHEY_SIMPLEX,
+                1.0, (0, 0, 0), 4, cv2.LINE_AA)
+                cv2.putText(image, "DEG:" + str(int(self.angle_deg)), (10, 30), cv2.FONT_HERSHEY_SIMPLEX,
+                1.0, (255, 255, 255), 2, cv2.LINE_AA)  
             else:
                 self.point_history.append([0, 0])
+                self.first = True
                         
             pre_processed_point_history_list = self._preProcessPointHistory(debug_image, self.point_history)
 
@@ -123,7 +172,6 @@ class ServiceRecognition:
                 gesture = str(self.keypoint_history_labels[most_common_fg_id[0][0]])
                 
         return prediction, finger_gesture_id, gesture 
-
 
     def _preProcessPointHistory(self, image, point_history):
         image_width, image_height = image.shape[1], image.shape[0]
