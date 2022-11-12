@@ -6,3 +6,4 @@ src/tmp
 *.DS_Store
 assets/models/*.h5py/*
 __pycache__/
+.vscode/settings.json

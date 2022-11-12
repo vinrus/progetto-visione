@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="it-IT">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Gesture Recognition with Arduino and MediaPiepe</title>
+    <!-- Meta -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="D'Acunto Andrea - D'Emilio  Marco - Russo Vincenzo">
+    <link rel="shortcut icon" href="https://mediapipe.dev/images/mediapipe_small.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link id="theme-style" rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <!-- ******HEADER****** -->
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 align-self-center profile-content">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <img class="img-fluid  profile-image img-responsive pull-left"
+                                src="../assets/graphics/logo.svg" alt="logo" hegiht="100" width="100">
+                        </div>
+                        <div class="col-md-10">
+
+                            <h1 class="name">Gesture classification and recognition with Arduino</h1>
+                            <h2 class="desc">Creazione e sviluppo di un applicativo desktop per il riconoscimento
+                                delle gesture della mano tramite
+                                l'utilizzo di <strong>Mediapipe</strong> ed integrazione con Arduino </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="profile-content pull-right">
+                        <img class="profile-image img-responsive pull-left"
+                            src="http://web.unibas.it/bloisi/assets/images/logo.png" alt="unibas logo" height=97
+                            width=312 />
+                        <p>&nbsp;</p>
+                        <h3 class="desc">
+                            <a href="http://web.unibas.it/bloisi/corsi/visione-e-percezione.html" target="_blank">
+                                Corso di Visione e Percezione</a>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--//container-->
+    </header>
+    <!--//header-->
+
+    <div class="container sections-wrapper">
+        <div class="row">
+            <div class="primary col-md-8 col-sm-12 col-xs-12">
+                <!-- Problema -->
+                <section class="about section">
+                    <div class="section-inner">
+                        <h2 class="heading">Problema</h2>
+                        <div class="content">
+                            <p>
+                                Una problematica nota nel campo dei dispositivi smart consiste nella possibilità di
+                                interagire con loro
+                                attraverso varie opzioni, tra le più comuni vi è la voce per impartire comandi di
+                                varia natura, il viso per il riconoscimento facciale oppure, di molto più interesse per
+                                noi, l'utilizzo delle mani per il riconoscimento di gestures e segni, il tutto è
+                                finalizzato
+                                alla modifica del comportamento del dispositivo a seconda delle esigenze.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Motivazioni -->
+                <section class="about section">
+                    <div class="section-inner">
+                        <h2 class="heading">Motivazioni</h2>
+                        <div class="content">
+                            <p>
+                                Il progetto posto in essere consiste nella detection e nella classificazione di hand
+                                gesture per impartire comandi ai sensori di un arduino. Le motivazioni che ci hanno
+                                portato a concentrare
+                                i nostri sforzi nella realizzazione di un applicativo per la classificazione e il
+                                controllo degli hand sign e delle hand
+                                gestures è da identificare nella loro utilità in vari ambiti,come ad esempio quello
+                                domestico (e.g, controllo di dispositivi smart come accendere le luci o alzare/abbassare
+                                le tapparelle con le hand gesture).
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Obiettivi -->
+                <section class="about section">
+                    <div class="section-inner">
+                        <h2 class="heading"><a id="goals"></a>Obiettivi</h2>
+                        <div class="content">
+                            La realizzazione del seguente progetto consta di quatro parti:</br></br>
+                            <ol>
+                                <li><strong>Creazione</strong> del dataset per la classificazione delle gesture della
+                                    mano</li>
+                                <li><strong>Training</strong> del modello per la classificazione delle gesture</li>
+                                <li><strong>Implementazione</strong> di un applicativo grafico per la gestione delle
+                                    gesture </li>
+                                <li><strong>Connessione</strong> con l'arduino e invio dei comandi ai sensori</li>
+                            </ol>
+                            </p>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Assemblaggio -->
+                <section class="about section">
+                    <div class="section-inner">
+                        <h2 class="heading"><a id="assemblaggio"></a>Assemblaggio del circuito</h2>
+                        <div class="content">
+
+                            <p>Il processo di assemblaggio del circuito di Arduino è stato costruito in base alla
+                                tipologie di gesture individuate, cosi da simulare un ambiente reale.</p>
+                            <p>I componenti usati per l'assemblaggio del circuito sono: </p>
+                            <ul>
+                                <li>
+                                    <strong>Microntrollore:</strong> Arduino uno;
+                                </li>
+                                <li>
+                                    <strong>Componenti:</strong>
+                                </li>
+                                <ol>
+                                    <li>
+                                        <p class="mb-0">Led: Rosso, Verde, Blu;</p>
+                                    </li>
+                                    <li>
+                                        <p class="mb-0">Piezometro;</p>
+                                    </li>
+                                    <li>
+                                        <p class="mb-0">Servo Motore</p>
+                                    </li>
+                                </ol>
+                            </ul>
+
+                            <br>
+                            <strong>Schema circuitale</strong>
+                            <p>Nell'immagine sottostante viene mostrato lo schema circuitale seguito nell'assemblaggio
+                                dei vari componenti. </p>
+                            <img class="img-fluid justify-content-md-center"
+                                src="../assets/graphics/shemaArduino.svg" />
+                            <br>
+                            <br>
+                            <strong>Utilizzo dei componenti</strong>
+                            <p>I componenti sopra elencati mediente integrazione con l'applicativo desktop vengono
+                                comandati in base alla gesture che viene recepita.</p>
+                            <ul>
+                                <li>
+                                    <p class="fw-bold mb-0">Led:</p>
+                                    <!--TODO da rivedere questa parte-->
+                                    <p class="fw-italic mb-0">Comportamento "Singolo":</p>
+                                    <ol>
+                                        <li>
+                                            <!--TODO cosi da simulare il l'accensione di una luce-->
+                                            Rosso: si accende quando viene recipira la gesture che indica il numero due
+                                        </li>
+                                        <li>
+                                            Verde: si accende quando viene recipira la gesture che indica il numero tre
+                                        </li>
+                                        <li>
+                                            Blu: si accende quando viene recipira la gesture che indica il numero
+                                            quattro
+                                        </li>
+                                    </ol>
+                                    <br>
+                                    <!--TODO da rivedere questa parte-->
+                                    <p class="fw-italic mb-0">Comportamento "Colaborativo":</p>
+                                    <p class="mb-0">Il riconoscimento della gesture <strong>Palm Open - mano aperta
+                                            -</strong> vengono accesi contemponeamente tutti i led </p>
+                                    <p class="mb-0">Il riconoscimento della gesture <strong>First - pugno chiuso
+                                            -</strong> vengono spenti contemponeamente tutti i led </p>
+                                </li>
+                                <li>
+                                    <p class="fw-bold mb-0">Piezometro:</p>
+                                    <p class="mb-0">Il riconoscimento della gesture <strong>Palm Open - mano aperta -
+                                        </strong> emette una nota che equivale al valore di 262</p>
+                                    <p class="mb-0">Il riconoscimento della gesture <strong>First - pugno chiuso -
+                                        </strong> emette una nota che equivale al valore di 294 </p>
+                                </li>
+                                <li>
+                                    <p class="fw-bold mb-0">Servo Motore:</p>
+                                    <p class="mb-0">Il riconoscimento della gesture <strong>Index - indice della mano
+                                        </strong> in base al movimento che effettua - Rotazione senso
+                                        orario oppure Rotazione senso antiorario - il servo motore ruota da 0 a 180
+                                        oppure da 180 a 0.</p>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </section>
+
+                <section class="about section">
+                    <div class="section-inner">
+                        <h2 class="heading"><a id="dataset"></a>Metodo</h2>
+                        <div class="content">
+
+                            <p>Descrivere il procedimento utilizzato per risolvere il problema, evidenziando quali
+                                algoritmi noti sono stati utilizzati</p>
+                            <p>Per esempio:<br>
+                            <ul>
+                                <li>Corner detector di Harris</li>
+                                <li>SIFT</li>
+                                <li>CNN</li>
+                            </ul>
+                            </p>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Implementazione e codice -->
+                <section class="about section">
+                    <div class="section-inner">
+                        <h2 class="heading"><a id="dataset"></a>Implementazione e Codice</h2>
+                        <div class="content">
+                            <p>Descrivere la tecnologia utilizzata per risolvere il problema</p>
+                            <p>Per esempio:<br>
+                            <ul>
+                                <li>Python 3</li>
+                                <li>ROS Melodic</li>
+                                <li>OpenCV 4.2</li>
+                            </ul>
+                            </p>
+
+                            <p>
+                                <font color="red">Link al repository Git con il codice</font><br>
+                                Il codice deve contenere un file README con le istruzioni per eseguire il codice
+                            </p>
+
+                        </div>
+                        <!--//content-->
+                    </div>
+                    <!--//section-inner-->
+                </section>
+
+                <!-- Dataset -->
+                <section class="about section">
+                    <div class="section-inner">
+                        <h2 class="heading"><a id="dataset"></a>Dataset</h2>
+                        <div class="content">
+                            <p>Descrivere i dati utilizzati fornendo i link per il download</p>
+
+
+                        </div>
+                        <!--//content-->
+                    </div>
+                    <!--//section-inner-->
+                </section>
+                <!--//section-->
+
+                <section class="about section">
+                    <div class="section-inner">
+                        <h2 class="heading"><a id="training"></a>Risultati</h2>
+                        <div class="content">
+
+
+                            <h3>Risultati qualitativi</h3>
+                            <p>Fornire esempi di applicazione del metodo con immagini e video</p>
+
+
+                            <h3>Risultati quantitativi</h3>
+                            <p>Fornire una descrizione delle performance del metodo usando
+                                delle opportune metriche</p>
+
+                            <p>Per esempio:<br>
+                                Fornire su un numero di immagini non inferiore a 30 i dati relativi
+                                a FP, FN, TP.
+                            </p>
+
+
+
+                        </div>
+                        <!--//content-->
+                    </div>
+                    <!--//section-inner-->
+                </section>
+                <!--//section-->
+
+            </div>
+            <!--//primary-->
+
+            <div class="secondary col-md-4 col-sm-12 col-xs-12">
+                <aside class="info aside section">
+                    <div class="section-inner">
+                        <h2 class="heading">Autori</h2>
+                        <div class="content">
+                            <p>Andrea D'Acunto, 61006</p>
+                            <p>Marco D'Emilio, 59973 </p>
+                            <p>Vincenzo Russo, 61005</p>
+                        </div>
+                        <!--//content-->
+                    </div>
+                    <!--//section-inner-->
+                </aside>
+                <!--//aside-->
+
+
+                <aside class="blog aside section">
+                    <div class="section-inner">
+                        <h2 class="heading">Riferimenti</h2>
+                        <div class="content">
+                            <div class="item">
+                                <a href="https://google.github.io/mediapipe/" target="_blank">MediaPiepe</a>
+                            </div>
+                            <div class="item">
+                                <a href="https://www.arduino.cc" target="_blank">Arduino</a>
+                            </div>
+                            <div class="item">
+                                <a href="https://kivy.org" target="_blank">Kivy</a>
+                            </div>
+                        </div>
+                        <!--//content-->
+                    </div>
+                    <!--//section-inner-->
+                </aside>
+                <!--//section-->
+
+            </div>
+            <!--//secondary-->
+        </div>
+        <!--//row-->
+    </div>
+    <!--//masonry-->
+
+    <!-- ******FOOTER****** -->
+    <footer class="footer">
+        <div class="container text-center">
+            <small class="copyright">This template adapted from <a href="http://themes.3rdwavemedia.com/"
+                    target="_blank">3rd Wave Media</a></small>
+        </div>
+        <!--//container-->
+    </footer>
+    <!--//footer-->
+
+
+
+
+
+</body>
+
+</html>

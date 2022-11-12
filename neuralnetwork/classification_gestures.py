@@ -15,7 +15,7 @@ import argparse
 sys.path.append('src')
 from utility.constants import Constants
 from services.keypoint_classifier import KeyPointClassifier
-from utility.calcFps import CalcFps
+from utility.calc_fps import CalcFps
 
 # camera shapes
 video = 0

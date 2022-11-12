@@ -1,7 +1,7 @@
 #include <Servo.h>
 #include <ArduinoJson.h>
 
-int notes[] = { 262, 294, 330, 349, 362 };
+int notes[] = { 262, 294 };
 int timerNote = 120;
 
 Servo servoMotor;
