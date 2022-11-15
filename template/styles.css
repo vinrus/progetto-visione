@@ -19,7 +19,7 @@ h1,
 h2,
 h3,
 h4,
-h5,
+h5,h3
 h6 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
@@ -178,6 +178,12 @@ iframe {
   margin-bottom: 30px;
   color: #545e69;
   font-size: 24px;
+}
+.section .h3-heading{
+  margin-top: 40px;
+  margin-bottom: 15px;
+  color: #808a94;
+  font-size: 18px;
 }
 .section .content .more-link .fa {
   margin-right: 5px;

@@ -167,12 +167,12 @@ def write_on_csv(number, mode, landmark_list, point_history_list):
 
     if mode == 0:
         pass
-    if mode == 1 and (0 <= number <= 9):
+    if mode == 1 and (0 <= number <= 5):
         with open(csv_path_r, 'a', newline="") as f:
                 writer = csv.writer(f)
                 writer.writerow([number, *landmark_list])
                 # print(f"[DEBUG] point saved for mode: {mode}")
-    if mode == 2 and  (0 <= number <= 9):
+    if mode == 2 and  (0 <= number <= 5):
         with open(csv_path_h, 'a', newline="") as f:
             writer = csv.writer(f)
             writer.writerow([number, *point_history_list])

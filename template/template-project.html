@@ -23,7 +23,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-2">
                             <img class="img-fluid  profile-image img-responsive pull-left"
-                                src="../assets/graphics/logo.svg" alt="logo" hegiht="100" width="100">
+                                src="../assets/graphics/logo.svg" alt="logo" hegiht="300" width="300">
                         </div>
                         <div class="col-md-10">
 
@@ -87,7 +87,7 @@
                                 controllo degli hand sign e delle hand
                                 gestures è da identificare nella loro utilità in vari ambiti,come ad esempio quello
                                 domestico (e.g, controllo di dispositivi smart come accendere le luci o alzare/abbassare
-                                le tapparelle con le hand gesture).
+                                le tapparelle in maniera semplice e intuitiva).
                             </p>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                                 <li><strong>Training</strong> del modello per la classificazione delle gesture</li>
                                 <li><strong>Implementazione</strong> di un applicativo grafico per la gestione delle
                                     gesture </li>
-                                <li><strong>Connessione</strong> con l'arduino e invio dei comandi ai sensori</li>
+                                <li><strong>Connessione</strong> con l'Arduino e invio dei comandi ai sensori</li>
                             </ol>
                             </p>
 
@@ -124,7 +124,7 @@
                             <p>I componenti usati per l'assemblaggio del circuito sono: </p>
                             <ul>
                                 <li>
-                                    <strong>Microntrollore:</strong> Arduino uno;
+                                    <strong>Microntrollore:</strong> Arduino uno.
                                 </li>
                                 <li>
                                     <strong>Componenti:</strong>
@@ -137,7 +137,7 @@
                                         <p class="mb-0">Piezometro;</p>
                                     </li>
                                     <li>
-                                        <p class="mb-0">Servo Motore</p>
+                                        <p class="mb-0">Servo Motore.</p>
                                     </li>
                                 </ol>
                             </ul>
@@ -161,13 +161,13 @@
                                     <ol>
                                         <li>
                                             <!--TODO cosi da simulare il l'accensione di una luce-->
-                                            Rosso: si accende quando viene recipira la gesture che indica il numero due
+                                            <span style="color: #ff0000">Rosso</span>: si accende quando viene recipira la gesture che indica il numero due
                                         </li>
                                         <li>
-                                            Verde: si accende quando viene recipira la gesture che indica il numero tre
+                                            <span style="color: #00af17">Verde</span>: si accende quando viene recipira la gesture che indica il numero tre
                                         </li>
                                         <li>
-                                            Blu: si accende quando viene recipira la gesture che indica il numero
+                                            <span style="color: #0000ff">Blu</span>: si accende quando viene recipira la gesture che indica il numero
                                             quattro
                                         </li>
                                     </ol>
@@ -175,9 +175,9 @@
                                     <!--TODO da rivedere questa parte-->
                                     <p class="fw-italic mb-0">Comportamento "Colaborativo":</p>
                                     <p class="mb-0">Il riconoscimento della gesture <strong>Palm Open - mano aperta
-                                            -</strong> vengono accesi contemponeamente tutti i led </p>
+                                            -</strong> comporta l'accensione contemporanea di tutti i led </p>
                                     <p class="mb-0">Il riconoscimento della gesture <strong>First - pugno chiuso
-                                            -</strong> vengono spenti contemponeamente tutti i led </p>
+                                            -</strong> comporta lo spegnimento contemponeo di tutti i led </p>
                                 </li>
                                 <li>
                                     <p class="fw-bold mb-0">Piezometro:</p>
@@ -190,7 +190,7 @@
                                     <p class="fw-bold mb-0">Servo Motore:</p>
                                     <p class="mb-0">Il riconoscimento della gesture <strong>Index - indice della mano
                                         </strong> in base al movimento che effettua - Rotazione senso
-                                        orario oppure Rotazione senso antiorario - il servo motore ruota da 0 a 180
+                                        orario oppure Rotazione senso antiorario - ruota il servo motore da 0 a 180
                                         oppure da 180 a 0.</p>
                                 </li>
                             </ul>
@@ -202,17 +202,100 @@
                 <section class="about section">
                     <div class="section-inner">
                         <h2 class="heading"><a id="dataset"></a>Metodo</h2>
+                        <h3 class ="h3-heading"> Hand detection</h3>
                         <div class="content">
-
-                            <p>Descrivere il procedimento utilizzato per risolvere il problema, evidenziando quali
-                                algoritmi noti sono stati utilizzati</p>
-                            <p>Per esempio:<br>
-                            <ul>
-                                <li>Corner detector di Harris</li>
-                                <li>SIFT</li>
-                                <li>CNN</li>
-                            </ul>
+                            <p>
+                                Il framework utilizzato per effettuare la detection della mano è <strong>Mediapipe</strong>, questa è una 
+                                soluzione di <i>Hand Traking</i> ad alta fedeltà. Utilizza il machine learning per dedurre 21 punti di riferimento 3D
+                                da un singolo fotogramma.
+                                Mediapipe utilizza una pipeline composta da più modelli che lavorano insieme:
+                                <ul>
+                                    <li>Un modello di rilevamento del palmo che opera sull'immagine completa e restituisce un riquadro di delimitazione della mano orientato;</li>
+                                    <li>Un modello di riferimento della mano che opera sulla regione dell'immagine ritagliata definita dal rilevatore del palmo e 
+                                        restituisce punti chiave della mano 3D ad alta fedeltà.</li>
+                                </ul>
+                                Dopo il rilevamento del palmo sull'intera immagine, il modello esegue una precisa localizzazione
+                                dei punti chiave di 21 coordinate 3D delle nocche della mano all'interno delle regioni della mano rilevate tramite regressione.
+                                Il modello apprende una rappresentazione coerente della posa della mano interna ed è robusto anche per mani parzialmente 
+                                visibili.
                             </p>
+
+
+
+                        </div>
+                        <h3 class ="h3-heading"> Creazione dataset <i>Hand sign</i></h3>
+                        <div class="content">
+                            <p>
+                                In questa fase, la generazione del dataset ha richiesto la creazione di uno script in Python per l'estrapolazione
+                                dei Keypoint della mano. <strong><i>"classification_gestures.py"</i></strong></br>
+                                In particolare questo script, effettua la detection dei Keypoint con Mediapipe ed estrapola
+                                quest'ultimi in un file .csv che sarà usato come input per la fase di training.</br></br>
+
+                                <img class="img-fluid  profile-image img-responsive pull-left"
+                                src="img/hand_landmarks.png"> </br></br>
+
+                                I dati estratti dai Landmarks vengono preprocessati, prima di inserirli nel file di dataset, nel seguente modo:
+                                <ul>
+                                    <li>Conversione delle coordinate relative all'ID:0 (punto di polso);</li>
+                                    <li>Conversione in un array mono dimensionale;</li>
+                                    <li>Normalizzazione rispetto ad un valore di massimo.</li>
+                                </ul>
+
+                            Eseguendo lo script con argomento <i>mode 1</i> si avrà il seguente:
+                            <img class="img-fluid  profile-image img-responsive pull-left"
+                            src="img/hand-sign.png"> </br></br>
+                            
+                            Utilizzando i tasti numerici da "0" a "5", i Keypoints verranno aggiunti al file <strong><i>"assets/dataset/keypoint.csv"</i></strong>
+                            come mostrato di seguito.</br>
+                            Prima colonna: numero della tastiera(utilizzato come l'ID della classe), dalla seconda colonna in poi: coordinate dei Keypoints.</br></br>
+
+                            <img class="img-fluid  profile-image img-responsive pull-left"
+                                src="img/Dataset1.png"> </br></br>
+                            </p>
+
+
+
+                        </div>
+
+                        <h3 class ="h3-heading"> Creazione dataset <i>Hand gesture</i></h3>
+                        <div class="content">
+                            <p>
+                                In questa fase, la generazione del dataset inerente alla classificazione delle hand gestures ha richiesto l'estensione dello script 
+                                precedentemente mensionato affinchè implementasse la classificazione del segno <i>indice</i> e di conseguenza, l'estrazione del singolo keypoint
+                                dell'indice in una cosa FIFO che mantiene i punti dei 20 frame precedenti.</br></br>
+                                Anche in questo caso i dati estratti dai Landmarks vengono preprocessati, prima di inserirli nel file di dataset.</br>
+
+                                Utilizzando i tasti numerici da "0" a "1", i Keypoints verranno aggiunti al file 
+                                <strong><i>"assets/dataset/keypoint_history.csv"</i></strong></br></br>
+
+                                Eseguendo lo script con argomento <i>mode 2</i> si avrà il seguente:
+                                <img class="img-fluid  profile-image img-responsive pull-left"
+                                src="img/hand-gesture.png"> </br>
+
+                            </p>
+
+
+
+                        </div>
+
+                        <h3 class ="h3-heading"> Training</h3>
+                        <div class="content">
+                            <p>
+                                Il training della rete e di conseguenza la creazione del modello, ha richesto la creazione di un <i>Jupiter Notebook</i> per ciscun datatset.
+                                <strong><i>neuralnetwork/hand_classificator.ipynb</i></strong></br></br>
+                                Il dataset è stato diviso in:
+                                <ul>
+                                    <li>60% training;</li>
+                                    <li>20% test;</li>
+                                    <li>20% validation.</li>
+                                </ul>
+                                <img class="img-fluid  profile-image img-responsive pull-left"
+                                src="img/data-plot.png"> </br>
+
+                                <!--TODO se si riesce implementare il grafico interattivo!!-->
+                            </p>
+
+
 
                         </div>
                     </div>
