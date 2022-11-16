@@ -12,6 +12,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link id="theme-style" rel="stylesheet" href="./styles.css">
+
+    <script src="highlight.min.js"></script>
+    <link rel="stylesheet" href="xcode.min.css">
+    <script>hljs.initHighlightingOnLoad();</script>
 </head>
 
 <body>
@@ -85,7 +89,7 @@
                                 portato a concentrare
                                 i nostri sforzi nella realizzazione di un applicativo per la classificazione e il
                                 controllo degli hand sign e delle hand
-                                gestures è da identificare nella loro utilità in vari ambiti,come ad esempio quello
+                                gestures è da attribuire alla loro utilità in diversi ambiti,come ad esempio quello
                                 domestico (e.g, controllo di dispositivi smart come accendere le luci o alzare/abbassare
                                 le tapparelle in maniera semplice e intuitiva).
                             </p>
@@ -100,9 +104,9 @@
                         <div class="content">
                             La realizzazione del seguente progetto consta di quatro parti:</br></br>
                             <ol>
-                                <li><strong>Creazione</strong> del dataset per la classificazione delle gesture della
-                                    mano</li>
-                                <li><strong>Training</strong> del modello per la classificazione delle gesture</li>
+                                <li><strong>Creazione</strong> del dataset per la classificazione degli hand sign e del dataset 
+                                    per le gestures della mano</li>
+                                <li><strong>Training</strong> dei modelli tramite i corrispettivi dataset</li>
                                 <li><strong>Implementazione</strong> di un applicativo grafico per la gestione delle
                                     gesture </li>
                                 <li><strong>Connessione</strong> con l'Arduino e invio dei comandi ai sensori</li>
@@ -119,12 +123,12 @@
                         <h2 class="heading"><a id="assemblaggio"></a>Assemblaggio del circuito</h2>
                         <div class="content">
 
-                            <p>Il processo di assemblaggio del circuito di Arduino è stato costruito in base alla
-                                tipologie di gesture individuate, cosi da simulare un ambiente reale.</p>
+                            <p>Il processo di assemblaggio del circuito di Arduino è proseguito di pari passo all'individuazione dei segni e delle gestures, 
+                                consentendoci la possibilità di simulare un ambiente reale.</p>
                             <p>I componenti usati per l'assemblaggio del circuito sono: </p>
                             <ul>
                                 <li>
-                                    <strong>Microntrollore:</strong> Arduino uno.
+                                    <strong>Microcontrollore:</strong> Arduino uno.
                                 </li>
                                 <li>
                                     <strong>Componenti:</strong>
@@ -144,14 +148,14 @@
 
                             <br>
                             <strong>Schema circuitale</strong>
-                            <p>Nell'immagine sottostante viene mostrato lo schema circuitale seguito nell'assemblaggio
+                            <p>Nell'immagine sottostante viene mostrato lo schema circuitale seguito dall'assemblaggio
                                 dei vari componenti. </p>
                             <img class="img-fluid justify-content-md-center"
                                 src="../assets/graphics/shemaArduino.svg" />
                             <br>
                             <br>
                             <strong>Utilizzo dei componenti</strong>
-                            <p>I componenti sopra elencati mediente integrazione con l'applicativo desktop vengono
+                            <p>I componenti sopra elencati mediante integrazione con l'applicativo desktop vengono
                                 comandati in base alla gesture che viene recepita.</p>
                             <ul>
                                 <li>
@@ -161,19 +165,17 @@
                                     <ol>
                                         <li>
                                             <!--TODO cosi da simulare il l'accensione di una luce-->
-                                            <span style="color: #ff0000">Rosso</span>: si accende quando viene recipira la gesture che indica il numero due
+                                            <span style="color: #ff0000">Rosso</span>: si accende quando viene recepita la gesture che indica il numero due
                                         </li>
                                         <li>
-                                            <span style="color: #00af17">Verde</span>: si accende quando viene recipira la gesture che indica il numero tre
+                                            <span style="color: #00af17">Verde</span>: si accende quando viene recepita la gesture che indica il numero tre
                                         </li>
                                         <li>
-                                            <span style="color: #0000ff">Blu</span>: si accende quando viene recipira la gesture che indica il numero
-                                            quattro
+                                            <span style="color: #0000ff">Blu</span>: si accende quando viene recepita la gesture che indica il numero quattro
                                         </li>
                                     </ol>
                                     <br>
-                                    <!--TODO da rivedere questa parte-->
-                                    <p class="fw-italic mb-0">Comportamento "Colaborativo":</p>
+                                    <p class="fw-italic mb-0">Comportamento "Collaborativo":</p>
                                     <p class="mb-0">Il riconoscimento della gesture <strong>Palm Open - mano aperta
                                             -</strong> comporta l'accensione contemporanea di tutti i led </p>
                                     <p class="mb-0">Il riconoscimento della gesture <strong>First - pugno chiuso
@@ -190,8 +192,8 @@
                                     <p class="fw-bold mb-0">Servo Motore:</p>
                                     <p class="mb-0">Il riconoscimento della gesture <strong>Index - indice della mano
                                         </strong> in base al movimento che effettua - Rotazione senso
-                                        orario oppure Rotazione senso antiorario - ruota il servo motore da 0 a 180
-                                        oppure da 180 a 0.</p>
+                                        orario oppure Rotazione senso antiorario - ruota il servo motore da 0° a 180°
+                                        oppure da 180° a 0°.</p>
                                 </li>
                             </ul>
 
@@ -205,17 +207,17 @@
                         <h3 class ="h3-heading"> Hand detection</h3>
                         <div class="content">
                             <p>
-                                Il framework utilizzato per effettuare la detection della mano è <strong>Mediapipe</strong>, questa è una 
+                                Lo strumento utilizzato per effettuare la detection della mano è <strong>Mediapipe</strong>, questa è una 
                                 soluzione di <i>Hand Traking</i> ad alta fedeltà. Utilizza il machine learning per dedurre 21 punti di riferimento 3D
                                 da un singolo fotogramma.
                                 Mediapipe utilizza una pipeline composta da più modelli che lavorano insieme:
                                 <ul>
                                     <li>Un modello di rilevamento del palmo che opera sull'immagine completa e restituisce un riquadro di delimitazione della mano orientato;</li>
-                                    <li>Un modello di riferimento della mano che opera sulla regione dell'immagine ritagliata definita dal rilevatore del palmo e 
+                                    <li>Un modello di riferimento della mano che opera sulla regione della ROI(Region of Interest) definita precedentemente dal rilevatore del palmo e 
                                         restituisce punti chiave della mano 3D ad alta fedeltà.</li>
                                 </ul>
                                 Dopo il rilevamento del palmo sull'intera immagine, il modello esegue una precisa localizzazione
-                                dei punti chiave di 21 coordinate 3D delle nocche della mano all'interno delle regioni della mano rilevate tramite regressione.
+                                dei punti chiave composti da 21 coordinate 3D delle nocche della mano all'interno delle ROI rilevate tramite regressione.
                                 Il modello apprende una rappresentazione coerente della posa della mano interna ed è robusto anche per mani parzialmente 
                                 visibili.
                             </p>
@@ -227,27 +229,27 @@
                         <div class="content">
                             <p>
                                 In questa fase, la generazione del dataset ha richiesto la creazione di uno script in Python per l'estrapolazione
-                                dei Keypoint della mano. <strong><i>"classification_gestures.py"</i></strong></br>
+                                dei Keypoint della mano <strong><i>"classification_gestures.py"</i></strong>.</br>
                                 In particolare questo script, effettua la detection dei Keypoint con Mediapipe ed estrapola
                                 quest'ultimi in un file .csv che sarà usato come input per la fase di training.</br></br>
 
                                 <img class="img-fluid  profile-image img-responsive pull-left"
                                 src="img/hand_landmarks.png"> </br></br>
 
-                                I dati estratti dai Landmarks vengono preprocessati, prima di inserirli nel file di dataset, nel seguente modo:
+                                I dati estratti dai Landmarks, prima di essere inseriti nel file di dataset, vengono preprocessati nel seguente modo:
                                 <ul>
                                     <li>Conversione delle coordinate relative all'ID:0 (punto di polso);</li>
                                     <li>Conversione in un array mono dimensionale;</li>
                                     <li>Normalizzazione rispetto ad un valore di massimo.</li>
                                 </ul>
 
-                            Eseguendo lo script con argomento <i>mode 1</i> si avrà il seguente:
-                            <img class="img-fluid  profile-image img-responsive pull-left"
+                            Eseguendo lo script con argomento <i>mode 1</i> si avrà il seguente: 
+                            </br></br><img class="img-fluid  profile-image img-responsive pull-left"
                             src="img/hand-sign.png"> </br></br>
                             
                             Utilizzando i tasti numerici da "0" a "5", i Keypoints verranno aggiunti al file <strong><i>"assets/dataset/keypoint.csv"</i></strong>
                             come mostrato di seguito.</br>
-                            Prima colonna: numero della tastiera(utilizzato come l'ID della classe), dalla seconda colonna in poi: coordinate dei Keypoints.</br></br>
+                            Prima colonna: numero della tastiera (utilizzato come l'ID della classe), dalla seconda colonna in poi: coordinate dei Keypoints.</br></br>
 
                             <img class="img-fluid  profile-image img-responsive pull-left"
                                 src="img/Dataset1.png"> </br></br>
@@ -261,14 +263,15 @@
                         <div class="content">
                             <p>
                                 In questa fase, la generazione del dataset inerente alla classificazione delle hand gestures ha richiesto l'estensione dello script 
-                                precedentemente mensionato affinchè implementasse la classificazione del segno <i>indice</i> e di conseguenza, l'estrazione del singolo keypoint
-                                dell'indice in una cosa FIFO che mantiene i punti dei 20 frame precedenti.</br></br>
+                                ,precedentemente introdotto, affinchè implementasse la classificazione del segno <i>indice</i> e di conseguenza, l'estrazione del singolo keypoint
+                                dell'indice in una coda FIFO che mantiene i punti dei 20 frame precedenti.</br></br>
                                 Anche in questo caso i dati estratti dai Landmarks vengono preprocessati, prima di inserirli nel file di dataset.</br>
 
                                 Utilizzando i tasti numerici da "0" a "1", i Keypoints verranno aggiunti al file 
                                 <strong><i>"assets/dataset/keypoint_history.csv"</i></strong></br></br>
 
                                 Eseguendo lo script con argomento <i>mode 2</i> si avrà il seguente:
+                                </br></br>
                                 <img class="img-fluid  profile-image img-responsive pull-left"
                                 src="img/hand-gesture.png"> </br>
 
@@ -281,15 +284,56 @@
                         <h3 class ="h3-heading"> Training</h3>
                         <div class="content">
                             <p>
-                                Il training della rete e di conseguenza la creazione del modello, ha richesto la creazione di un <i>Jupiter Notebook</i> per ciscun datatset.
-                                <strong><i>neuralnetwork/hand_classificator.ipynb</i></strong></br></br>
-                                Il dataset è stato diviso in:
+                                Il training della rete e di conseguenza la creazione del modello, ha richesto la creazione di un <i>Jupiter Notebook</i> per ciscun datatset;</br></br>
+                                <strong><i>neuralnetwork/hand_classificator.ipynb</i></strong> per quanto riguarda gli <i>hand sign</i>.</br>
+                                <strong><i>neuralnetwork/hand_history_classificator.ipynb</i></strong> per quanto riguarda le <i>hand gesture</i>.</br></br>
+                                Il dataset per gli <i>hand sign</i> è stato diviso in:
                                 <ul>
                                     <li>60% training;</li>
                                     <li>20% test;</li>
                                     <li>20% validation.</li>
                                 </ul>
-                                <iframe class="w-100" style="height: 50vh;" src="./img/data-plot.html"></iframe>
+                                <iframe class="w-100" style="height: 50vh;" src="./img/data-plot.html"></iframe></br>
+                                Il modello della rete vine creato nel seguente modo:</br></br>
+                                
+                                
+                                <pre><code class="python"> <!--TODO @vincenzo formattare il codice a sinistra della pagina -->
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Input((21 * 2, )),
+    tf.keras.layers.Dropout(0.2),
+    tf.keras.layers.Dense(20, activation='relu'),
+    tf.keras.layers.Dropout(0.4),
+    tf.keras.layers.Dense(10, activation='relu'),
+    tf.keras.layers.Dense(num_classes, activation='softmax'),
+])
+                                </code></pre>
+                                
+                                <img class="img-fluid  profile-image img-responsive pull-left"
+                                src="img/model1.png" hegiht="400" width="400"> </br></br>
+                            </br>Anche il dataset per le <i>hand gesture</i> è stato diviso in:
+                                <ul>
+                                    <li>60% training;</li>
+                                    <li>20% test;</li>
+                                    <li>20% validation.</li>
+                                </ul>
+                                <iframe class="w-100" style="height: 50vh;" src="./img/data-plot2.html"></iframe></br>
+
+                                Il modello della rete vine creato nel seguente modo:</br></br>
+                                
+                                <pre><code class="python"> <!--TODO @vincenzo formattare il codice a sinistra della pagina -->
+model = tf.keras.models.Sequential([
+    tf.keras.layers.InputLayer(input_shape=(TIME_STEPS * DIMENSION, )),
+    tf.keras.layers.Dropout(0.2),
+    tf.keras.layers.Dense(24, activation='relu'),
+    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dense(10, activation='relu'),
+    tf.keras.layers.Dense(NUM_CLASSES, activation='softmax')
+])
+                                </code></pre>
+                                
+                                <img class="img-fluid  profile-image img-responsive pull-left"
+                                src="img/model2.png" hegiht="400" width="400"> </br></br>
+
                             </p>
 
 
@@ -303,19 +347,49 @@
                     <div class="section-inner">
                         <h2 class="heading"><a id="dataset"></a>Implementazione e Codice</h2>
                         <div class="content">
-                            <p>Descrivere la tecnologia utilizzata per risolvere il problema</p>
-                            <p>Per esempio:<br>
-                            <ul>
-                                <li>Python 3</li>
-                                <li>ROS Melodic</li>
-                                <li>OpenCV 4.2</li>
-                            </ul>
-                            </p>
-
-                            <p>
-                                <font ">Link al repository Git con il codice</font><br>
-                                Il codice deve contenere un file README con le istruzioni per eseguire il codice
-                            </p>
+                            <h3 class ="h3-heading"> Implementazione</h3>
+                                <div class="content">
+                                    <p>
+                                        Le tecnologie utilizzate per implementare il progetto sono state:
+                                        <ul>
+                                            <li>Python 3</li>
+                                            <ul>
+                                                <li>
+                                                    Mediapipe
+                                                </li>
+                                                <li>
+                                                    Tensorflow lite
+                                                </li>
+                                                <li>
+                                                    pandas
+                                                </li>
+                                                <li>
+                                                    sklearn
+                                                </li>
+                                                <li>
+                                                    matplotlib
+                                                </li>
+                                                <li>
+                                                    OpenCV
+                                                </li>
+                                            </ul>
+                                        </ul>   
+                                        Framework per l'interfaccia grafica
+                                        <ul>
+                                            <li>Kivy</li>
+                                            <li>KivyMD</li>
+                                        </ul>        
+                                        Dispositivo Hardware
+                                        <ul>
+                                            <li>Arduino UNO</li>
+                                        </ul>
+                                    </p>
+                            
+                            <h3 class ="h3-heading"> Codice sorgente</h3>
+                            <div class="content">
+                                <p>
+                                    <a href="https://github.com/vinrus/progetto-visione" target="_blank">Link repository Github</a>
+                                </p>
 
                         </div>
                         <!--//content-->
@@ -328,7 +402,80 @@
                     <div class="section-inner">
                         <h2 class="heading"><a id="dataset"></a>Dataset</h2>
                         <div class="content">
-                            <p>Descrivere i dati utilizzati fornendo i link per il download</p>
+                            <p>The dataset è composto nel seguente modo:</p>
+
+                                <html>
+								<head>
+								<style>
+								#customers {
+								font-family: Arial, Helvetica, sans-serif;
+								border-collapse: collapse;
+								width: 100%;
+								}
+
+								#customers td, #customers th {
+								border: 1px solid #ddd;
+								padding: 8px;
+								}
+
+								#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+								#customers tr:hover {background-color: #ddd;}
+
+								#customers th {
+								padding-top: 12px;
+								padding-bottom: 12px;
+								text-align: left;
+								background-color: #00991c;
+								color: white;
+								}
+								</style>
+								</head>
+								<body>
+
+                                <table id="customers">
+                                    <tr>
+                                        <th>Classe</th>
+                                        <th>n° di dati</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Palm open</td>
+                                        <td>3000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fist (palm closed)</td>
+                                        <td>3000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Index</td>
+                                        <td>3000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Finger 2</td>
+                                        <td>3000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Finger 3</td>
+                                        <td>3000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Finger 4</td>
+                                        <td>3000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Clockwise</td>
+                                        <td>12000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Counter clockwise</td>
+                                        <td>12000</td>
+                                    </tr>
+                                </table>
+
+								</body>
+								</html>
+								
+								<p></p>	
 
 
                         </div>
