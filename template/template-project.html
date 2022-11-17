@@ -16,6 +16,9 @@
     <script src="highlight.min.js"></script>
     <link rel="stylesheet" href="xcode.min.css">
     <script>hljs.initHighlightingOnLoad();</script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
@@ -474,9 +477,6 @@ model = tf.keras.models.Sequential([
 
 								</body>
 								</html>
-								
-								<p></p>	
-
 
                         </div>
                         <!--//content-->
@@ -496,16 +496,181 @@ model = tf.keras.models.Sequential([
 
 
                             <h3>Risultati quantitativi</h3>
-                            <p>Fornire una descrizione delle performance del metodo usando
-                                delle opportune metriche</p>
+                            <p>Per valutare le performance del modello, è stata utilizzata come metrica la <i>F1-score</i>.</br>
+                                Questa riassume le prestazioni predittive del modello utilizzando a sua volta due ulteriori metriche:</br>
+                                <i>Precision</i> e <i>Recall</i>.</br></br>
+                                La <i>precision</i> è il rapporto tra il numero delle previsioni corrette di un evento (classe) sul totale delle volte 
+                                che il modello lo prevede. Quando un modello è preciso per una classe, ogni volta che prevede l'evento sbaglia raramente.</br></br>
+                                La <i>recall</i> misura la sensibilità del modello. E' il rapporto tra le previsioni corrette per una classe sul totale dei casi 
+                                in cui si verifica effettivamente.
+                            </p>
+                            <p>Per definizione, <i>F1-score</i> è la media aronica di <i>Precision</i> e <i>Recall</i> definita come:</br>
+                                \[ \text{F1-score} = 2 \times \frac{Precision \times Recall}{Precision + Recall}\] </br>
 
-                            <p>Per esempio:<br>
-                                Fornire su un numero di immagini non inferiore a 30 i dati relativi
-                                a FP, FN, TP.
+                                Questa formula può essere scritta in modo equivalente come:
+
+                                \[\text{F1-score} =  \frac{2}{\frac{1}{Precision} + \frac{1}{Recall}}\] </br>
+
+                                F1-score tiene conto sia di <i>precision</i> che di <i>recall</i>, il che significa che tiene in considerazione sia dei 
+                                <i>FP</i> (false positive) che dei <i>FN</i>(false negative), essendo un valore compreso tra 0 e 1, più 
+                                è vicino a 1, migliore è il modello.</br></br>
+
+                                In aggiunta è stata creata la matrice di confusione come ulteriore metrica nella quale ogni riga
+                                rappresenta i valori predetti, mentre ogni colonna rappresenta i valori reali. L'elemento sulla colonna
+                                j è il numero di casi in cui il classificatore ha classificato la classe "vera" j come classe i. attraverso
+                                questa matrice è osservabile se vi è "confusione" nella classificazione di diverse classi.           
                             </p>
 
 
+                            <p>
+                                Per quando riguarda il modello per la classificazione degli <i>Hand Sign</i>
+                                abbiamo:</br>
+                                <img class="img-fluid  profile-image img-responsive pull-left"
+                                src="img/confusionMatrix1.png"> </br></br>
 
+                                <html>
+                                    <head>
+                                    <style>
+                                    #customers {
+                                    font-family: Arial, Helvetica, sans-serif;
+                                    border-collapse: collapse;
+                                    width: 100%;
+                                    }
+    
+                                    #customers td, #customers th {
+                                    border: 1px solid #ddd;
+                                    padding: 8px;
+                                    }
+    
+                                    #customers tr:nth-child(even){background-color: #f2f2f2;}
+    
+                                    #customers tr:hover {background-color: #ddd;}
+    
+                                    #customers th {
+                                    padding-top: 12px;
+                                    padding-bottom: 12px;
+                                    text-align: left;
+                                    background-color: #ffc341;
+                                    color: white;
+                                    }
+                                    </style>
+                                    </head>
+                                    <body>
+    
+                                    <table id="customers">
+                                        <tr>
+                                            <th>Classe</th>
+                                            <th>Precision</th>
+                                            <th>Recall</th>
+                                            <th>F1-score</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Palm open</td>
+                                            <td>1.0</td>
+                                            <td>0.99</td>
+                                            <td>0.99</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fist (palm closed)</td>
+                                            <td>1.0</td>
+                                            <td>1.0</td>
+                                            <td>1.0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Index</td>
+                                            <td>0.97</td>
+                                            <td>1.0</td>
+                                            <td>0.99</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Finger 2</td>
+                                            <td>0.99</td>
+                                            <td>0.97</td>
+                                            <td>0.98</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Finger 3</td>
+                                            <td>1.0</td>
+                                            <td>0.99</td>
+                                            <td>1.0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Finger 4</td>
+                                            <td>0.99</td>
+                                            <td>1.0</td>
+                                            <td>1.0</td>
+                                        </tr>
+                                    </table>
+                                    </body>
+                                    </html>
+                            </p>
+                            <p>
+                                <iframe class="w-100" style="height: 50vh;" src="./img/train1.html"></iframe></br>
+                                <iframe class="w-100" style="height: 50vh;" src="./img/validation1.html"></iframe></br>
+                            </p>
+
+                            <p>
+                                Per quando riguarda il modello per la classificazione delle <i>Hand Gesture</i>
+                                abbiamo:</br>
+                                <img class="img-fluid  profile-image img-responsive pull-left"
+                                src="img/confusionMatrix2.png"> </br></br>
+
+                                <html>
+                                    <head>
+                                    <style>
+                                    #customers {
+                                    font-family: Arial, Helvetica, sans-serif;
+                                    border-collapse: collapse;
+                                    width: 100%;
+                                    }
+    
+                                    #customers td, #customers th {
+                                    border: 1px solid #ddd;
+                                    padding: 8px;
+                                    }
+    
+                                    #customers tr:nth-child(even){background-color: #f2f2f2;}
+    
+                                    #customers tr:hover {background-color: #ddd;}
+    
+                                    #customers th {
+                                    padding-top: 12px;
+                                    padding-bottom: 12px;
+                                    text-align: left;
+                                    background-color: #ffc341;
+                                    color: white;
+                                    }
+                                    </style>
+                                    </head>
+                                    <body>
+    
+                                    <table id="customers">
+                                        <tr>
+                                            <th>Classe</th>
+                                            <th>Precision</th>
+                                            <th>Recall</th>
+                                            <th>F1-score</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Clockwise</td>
+                                            <td>0.99</td>
+                                            <td>1.0</td>
+                                            <td>1.0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Counter Clockwise</td>
+                                            <td>1.0</td>
+                                            <td>0.99</td>
+                                            <td>1.0</td>
+                                        </tr>
+                                    </table>
+                                    </body>
+                                    </html>
+                            </p>
+                            <p>
+                                <iframe class="w-100" style="height: 50vh;" src="./img/train2.html"></iframe></br>
+                                <iframe class="w-100" style="height: 50vh;" src="./img/validation2.html"></iframe></br>
+                            </p>
                         </div>
                         <!--//content-->
                     </div>
