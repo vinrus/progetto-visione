@@ -142,7 +142,7 @@ class ServiceRecognition:
                             angle_2 = self.last_angle_2 + (self.last_angle_2 + angle_2) 
                         if angle_2 < first_angle_2:
                             if not self.first_reverse:
-                                self.last_reverse_angle = -360-angle_1 
+                                self.last_reverse_angle = -359-angle_1 
                                 self.first_reverse = True        
                             dist_angle_2 = self.last_reverse_angle - angle_2
                             angle_2 =abs(self.last_reverse_angle + (dist_angle_2))
