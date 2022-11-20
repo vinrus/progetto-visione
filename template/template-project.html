@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="https://mediapipe.dev/images/mediapipe_small.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link id="theme-style" rel="stylesheet" href="./styles.css">
+    <link id="theme-style" rel="stylesheet" href="styles.css">
 
     <script src="highlight.min.js"></script>
     <link rel="stylesheet" href="xcode.min.css">
@@ -19,7 +19,6 @@
 </head>
 
 <body>
-    <!-- ******HEADER****** -->
     <header class="header">
         <div class="container">
             <div class="row">
@@ -53,9 +52,7 @@
             </div>
 
         </div>
-        <!--//container-->
     </header>
-    <!--//header-->
 
     <div class="container sections-wrapper">
         <div class="row">
@@ -89,7 +86,7 @@
                                 portato a concentrare
                                 i nostri sforzi nella realizzazione di un applicativo per la classificazione e il
                                 controllo degli hand sign e delle hand
-                                gestures è da attribuire alla loro utilità in diversi ambiti,come ad esempio quello
+                                gestures è da attribuire alla loro utilità in diversi ambiti, come ad esempio quello
                                 domestico (e.g, controllo di dispositivi smart come accendere le luci o alzare/abbassare
                                 le tapparelle in maniera semplice e intuitiva).
                             </p>
@@ -104,7 +101,8 @@
                         <div class="content">
                             La realizzazione del seguente progetto consta di quatro parti:</br></br>
                             <ol>
-                                <li><strong>Creazione</strong> del dataset per la classificazione degli hand sign e del dataset 
+                                <li><strong>Creazione</strong> del dataset per la classificazione degli hand sign e del
+                                    dataset
                                     per le gestures della mano</li>
                                 <li><strong>Training</strong> dei modelli tramite i corrispettivi dataset</li>
                                 <li><strong>Implementazione</strong> di un applicativo grafico per la gestione delle
@@ -123,7 +121,8 @@
                         <h2 class="heading"><a id="assemblaggio"></a>Assemblaggio del circuito</h2>
                         <div class="content">
 
-                            <p>Il processo di assemblaggio del circuito di Arduino è proseguito di pari passo all'individuazione dei segni e delle gestures, 
+                            <p>Il processo di assemblaggio del circuito di Arduino è proseguito di pari passo
+                                all'individuazione delle gestures,
                                 consentendoci la possibilità di simulare un ambiente reale.</p>
                             <p>I componenti usati per l'assemblaggio del circuito sono: </p>
                             <ul>
@@ -131,7 +130,7 @@
                                     <strong>Microcontrollore:</strong> Arduino uno.
                                 </li>
                                 <li>
-                                    <strong>Componenti:</strong>
+                                    <strong>Interfacciamento dei componenti:</strong>
                                 </li>
                                 <ol>
                                     <li>
@@ -165,13 +164,16 @@
                                     <ol>
                                         <li>
                                             <!--TODO cosi da simulare il l'accensione di una luce-->
-                                            <span style="color: #ff0000">Rosso</span>: si accende quando viene recepita la gesture che indica il numero due
+                                            <span style="color: #ff0000">Rosso</span>: si accende quando viene recepita
+                                            la gesture che indica il numero due
                                         </li>
                                         <li>
-                                            <span style="color: #00af17">Verde</span>: si accende quando viene recepita la gesture che indica il numero tre
+                                            <span style="color: #00af17">Verde</span>: si accende quando viene recepita
+                                            la gesture che indica il numero tre
                                         </li>
                                         <li>
-                                            <span style="color: #0000ff">Blu</span>: si accende quando viene recepita la gesture che indica il numero quattro
+                                            <span style="color: #0000ff">Blu</span>: si accende quando viene recepita la
+                                            gesture che indica il numero quattro
                                         </li>
                                     </ol>
                                     <br>
@@ -204,76 +206,92 @@
                 <section class="about section">
                     <div class="section-inner">
                         <h2 class="heading"><a id="dataset"></a>Metodo</h2>
-                        <h3 class ="h3-heading"> Hand detection</h3>
+                        <h3 class="h3-heading"> Hand detection</h3>
                         <div class="content">
                             <p>
-                                Lo strumento utilizzato per effettuare la detection della mano è <strong>Mediapipe</strong>, questa è una 
-                                soluzione di <i>Hand Traking</i> ad alta fedeltà. Utilizza il machine learning per dedurre 21 punti di riferimento 3D
+                                Lo strumento utilizzato per effettuare la detection della mano è
+                                <strong>Mediapipe</strong>, questa è una
+                                soluzione di <i>Hand Traking</i> ad alta fedeltà. Utilizza il machine learning per
+                                dedurre 21 punti di riferimento 3D
                                 da un singolo fotogramma.
                                 Mediapipe utilizza una pipeline composta da più modelli che lavorano insieme:
-                                <ul>
-                                    <li>Un modello di rilevamento del palmo che opera sull'immagine completa e restituisce un riquadro di delimitazione della mano orientato;</li>
-                                    <li>Un modello di riferimento della mano che opera sulla regione della ROI(Region of Interest) definita precedentemente dal rilevatore del palmo e 
-                                        restituisce punti chiave della mano 3D ad alta fedeltà.</li>
-                                </ul>
-                                Dopo il rilevamento del palmo sull'intera immagine, il modello esegue una precisa localizzazione
-                                dei punti chiave composti da 21 coordinate 3D delle nocche della mano all'interno delle ROI rilevate tramite regressione.
-                                Il modello apprende una rappresentazione coerente della posa della mano interna ed è robusto anche per mani parzialmente 
-                                visibili.
+                            <ul>
+                                <li>Un modello di rilevamento del palmo che opera sull'immagine completa e restituisce
+                                    un riquadro di delimitazione della mano orientato;</li>
+                                <li>Un modello di riferimento della mano che opera sulla regione della ROI(Region of
+                                    Interest) definita precedentemente dal rilevatore del palmo e
+                                    restituisce punti chiave della mano 3D ad alta fedeltà.</li>
+                            </ul>
+                            Dopo il rilevamento del palmo sull'intera immagine, il modello esegue una precisa
+                            localizzazione
+                            dei punti chiave composti da 21 coordinate 3D delle nocche della mano all'interno delle ROI
+                            rilevate tramite regressione.
+                            Il modello apprende una rappresentazione coerente della posa della mano interna ed è robusto
+                            anche per mani parzialmente
+                            visibili.
                             </p>
 
 
 
                         </div>
-                        <h3 class ="h3-heading"> Creazione dataset <i>Hand sign</i></h3>
+                        <h3 class="h3-heading"> Creazione dataset <i>Hand sign</i></h3>
                         <div class="content">
                             <p>
-                                In questa fase, la generazione del dataset ha richiesto la creazione di uno script in Python per l'estrapolazione
-                                dei Keypoint della mano <strong><i>"classification_gestures.py"</i></strong>.</br>
-                                In particolare questo script, effettua la detection dei Keypoint con Mediapipe ed estrapola
-                                quest'ultimi in un file .csv che sarà usato come input per la fase di training.</br></br>
+                                In questa fase, la generazione del dataset ha richiesto la creazione di uno script in
+                                Python per l'estrapolazione
+                                dei Keypoint della mano <code>classification_gestures.py</code>.</br>
+                                In particolare questo script, effettua la detection dei Keypoint con Mediapipe ed
+                                estrapola
+                                quest'ultimi in un file .csv che sarà usato come input per la fase di
+                                training.</br></br>
 
                                 <img class="img-fluid  profile-image img-responsive pull-left"
-                                src="img/hand_landmarks.png"> </br></br>
+                                    src="img/hand_landmarks.png"> </br></br>
 
-                                I dati estratti dai Landmarks, prima di essere inseriti nel file di dataset, vengono preprocessati nel seguente modo:
-                                <ul>
-                                    <li>Conversione delle coordinate relative all'ID:0 (punto di polso);</li>
-                                    <li>Conversione in un array mono dimensionale;</li>
-                                    <li>Normalizzazione rispetto ad un valore di massimo.</li>
-                                </ul>
+                                I dati estratti dai Landmarks, prima di essere inseriti nel file di dataset, vengono
+                                preprocessati nel seguente modo:
+                            <ul>
+                                <li>Conversione delle coordinate relative all'ID:0 (punto di polso);</li>
+                                <li>Conversione in un array mono dimensionale;</li>
+                                <li>Normalizzazione rispetto ad un valore di massimo.</li>
+                            </ul>
 
-                            Eseguendo lo script con argomento <i>mode 1</i> si avrà il seguente: 
+                            Eseguendo lo script con argomento <i>mode 1</i> si avrà il seguente:
                             </br></br><img class="img-fluid  profile-image img-responsive pull-left"
-                            src="img/hand-sign.png"> </br></br>
-                            
-                            Utilizzando i tasti numerici da "0" a "5", i Keypoints verranno aggiunti al file <strong><i>"assets/dataset/keypoint.csv"</i></strong>
-                            come mostrato di seguito.</br>
-                            Prima colonna: numero della tastiera (utilizzato come l'ID della classe), dalla seconda colonna in poi: coordinate dei Keypoints.</br></br>
+                                src="img/hand-sign.png"> </br></br>
 
-                            <img class="img-fluid  profile-image img-responsive pull-left"
-                                src="img/Dataset1.png"> </br></br>
+                            Utilizzando i tasti numerici da "0" a "5", i Keypoints verranno aggiunti al file
+                            <code>assets/dataset/keypoint.csv</code>
+                            come mostrato di seguito.</br>
+                            Prima colonna: numero della tastiera (utilizzato come l'ID della classe), dalla seconda
+                            colonna in poi: coordinate dei Keypoints.</br></br>
+
+                            <img class="img-fluid  profile-image img-responsive pull-left" src="img/Dataset1.png">
+                            </br></br>
                             </p>
 
 
 
                         </div>
 
-                        <h3 class ="h3-heading"> Creazione dataset <i>Hand gesture</i></h3>
+                        <h3 class="h3-heading"> Creazione dataset <i>Hand gesture</i></h3>
                         <div class="content">
                             <p>
-                                In questa fase, la generazione del dataset inerente alla classificazione delle hand gestures ha richiesto l'estensione dello script 
-                                ,precedentemente introdotto, affinchè implementasse la classificazione del segno <i>indice</i> e di conseguenza, l'estrazione del singolo keypoint
+                                In questa fase, la generazione del dataset inerente alla classificazione delle hand
+                                gestures ha richiesto l'estensione dello script
+                                ,precedentemente introdotto, affinchè implementasse la classificazione del segno
+                                <i>indice</i> e di conseguenza, l'estrazione del singolo keypoint
                                 dell'indice in una coda FIFO che mantiene i punti dei 20 frame precedenti.</br></br>
-                                Anche in questo caso i dati estratti dai Landmarks vengono preprocessati, prima di inserirli nel file di dataset.</br>
+                                Anche in questo caso i dati estratti dai Landmarks vengono preprocessati, prima di
+                                inserirli nel file di dataset.</br>
 
-                                Utilizzando i tasti numerici da "0" a "1", i Keypoints verranno aggiunti al file 
-                                <strong><i>"assets/dataset/keypoint_history.csv"</i></strong></br></br>
+                                Utilizzando i tasti numerici da "0" a "1", i Keypoints verranno aggiunti al file
+                                <code>assets/dataset/keypoint_history.csv</code></br></br>
 
                                 Eseguendo lo script con argomento <i>mode 2</i> si avrà il seguente:
                                 </br></br>
                                 <img class="img-fluid  profile-image img-responsive pull-left"
-                                src="img/hand-gesture.png"> </br>
+                                    src="img/hand-gesture.png"> </br>
 
                             </p>
 
@@ -281,23 +299,27 @@
 
                         </div>
 
-                        <h3 class ="h3-heading"> Training</h3>
+                        <h3 class="h3-heading"> Training</h3>
                         <div class="content">
-                            <p>
-                                Il training della rete e di conseguenza la creazione del modello, ha richesto la creazione di un <i>Jupiter Notebook</i> per ciscun datatset;</br></br>
-                                <strong><i>neuralnetwork/hand_classificator.ipynb</i></strong> per quanto riguarda gli <i>hand sign</i>.</br>
-                                <strong><i>neuralnetwork/hand_history_classificator.ipynb</i></strong> per quanto riguarda le <i>hand gesture</i>.</br></br>
+                            <p>Il training della rete e di conseguenza la creazione del modello, ha richesto la
+                                creazione di un <i>Jupiter Notebook</i> per ciscun datatset;</br></br>
+                                <code>neuralnetwork/hand_classificator.ipynb</code> per quanto riguarda gli
+                                <i>hand sign</i>.</br>
+                                <code>neuralnetwork/hand_history_classificator.ipynb</code> per quanto
+                                riguarda le <i>hand gesture</i>.</br></br>
                                 Il dataset per gli <i>hand sign</i> è stato diviso in:
-                                <ul>
-                                    <li>60% training;</li>
-                                    <li>20% test;</li>
-                                    <li>20% validation.</li>
-                                </ul>
-                                <iframe class="w-100" style="height: 50vh;" src="./img/data-plot.html"></iframe></br>
-                                Il modello della rete vine creato nel seguente modo:</br></br>
-                                
-                                
-                                <pre><code class="python"> <!--TODO @vincenzo formattare il codice a sinistra della pagina -->
+                            </p>
+                            <ul>
+                                <li>60% training;</li>
+                                <li>20% test;</li>
+                                <li>20% validation.</li>
+                            </ul>
+                            <iframe class="w-100" style="height: 50vh;" src="./img/data-plot.html"></iframe></br>
+                            Il modello della rete vine creato nel seguente modo:</br></br>
+                            <div class="row">
+
+                                <pre>
+                                    <code class="python">
 model = tf.keras.models.Sequential([
     tf.keras.layers.Input((21 * 2, )),
     tf.keras.layers.Dropout(0.2),
@@ -306,21 +328,26 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.Dense(10, activation='relu'),
     tf.keras.layers.Dense(num_classes, activation='softmax'),
 ])
-                                </code></pre>
-                                
-                                <img class="img-fluid  profile-image img-responsive pull-left"
-                                src="img/model1.png" hegiht="400" width="400"> </br></br>
-                            </br>Anche il dataset per le <i>hand gesture</i> è stato diviso in:
-                                <ul>
-                                    <li>60% training;</li>
-                                    <li>20% test;</li>
-                                    <li>20% validation.</li>
-                                </ul>
-                                <iframe class="w-100" style="height: 50vh;" src="./img/data-plot2.html"></iframe></br>
+                                    </code>
+                                </pre>
+                            </div>
 
-                                Il modello della rete vine creato nel seguente modo:</br></br>
-                                
-                                <pre><code class="python"> <!--TODO @vincenzo formattare il codice a sinistra della pagina -->
+                            <div class="row">
+                                <img class="d-flex justify-content-center" src="img/model1.png" hegiht="400"
+                                    width="400">
+                            </div>
+                            </br></br>
+                            </br>Anche il dataset per le <i>hand gesture</i> è stato diviso in:
+                            <ul>
+                                <li>60% training;</li>
+                                <li>20% test;</li>
+                                <li>20% validation.</li>
+                            </ul>
+                            <iframe class="w-100" style="height: 50vh;" src="./img/data-plot2.html"></iframe></br>
+
+                            Il modello della rete vine creato nel seguente modo:</br></br>
+
+                            <pre><code class="python"> 
 model = tf.keras.models.Sequential([
     tf.keras.layers.InputLayer(input_shape=(TIME_STEPS * DIMENSION, )),
     tf.keras.layers.Dropout(0.2),
@@ -330,11 +357,12 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.Dense(NUM_CLASSES, activation='softmax')
 ])
                                 </code></pre>
-                                
-                                <img class="img-fluid  profile-image img-responsive pull-left"
-                                src="img/model2.png" hegiht="400" width="400"> </br></br>
 
-                            </p>
+                            <div class="row">
+                                <img class="d-flex justify-content-center" src="img/model2.png" hegiht="400"
+                                    width="400">
+                            </div>
+                            </br></br>
 
 
 
@@ -347,54 +375,57 @@ model = tf.keras.models.Sequential([
                     <div class="section-inner">
                         <h2 class="heading"><a id="dataset"></a>Implementazione e Codice</h2>
                         <div class="content">
-                            <h3 class ="h3-heading"> Implementazione</h3>
-                                <div class="content">
-                                    <p>
-                                        Le tecnologie utilizzate per implementare il progetto sono state:
-                                        <ul>
-                                            <li>Python 3</li>
-                                            <ul>
-                                                <li>
-                                                    Mediapipe
-                                                </li>
-                                                <li>
-                                                    Tensorflow lite
-                                                </li>
-                                                <li>
-                                                    pandas
-                                                </li>
-                                                <li>
-                                                    sklearn
-                                                </li>
-                                                <li>
-                                                    matplotlib
-                                                </li>
-                                                <li>
-                                                    OpenCV
-                                                </li>
-                                            </ul>
-                                        </ul>   
-                                        Framework per l'interfaccia grafica
-                                        <ul>
-                                            <li>Kivy</li>
-                                            <li>KivyMD</li>
-                                        </ul>        
-                                        Dispositivo Hardware
-                                        <ul>
-                                            <li>Arduino UNO</li>
-                                        </ul>
-                                    </p>
-                            
-                            <h3 class ="h3-heading"> Codice sorgente</h3>
+                            <h3 class="h3-heading"> Implementazione</h3>
                             <div class="content">
                                 <p>
-                                    <a href="https://github.com/vinrus/progetto-visione" target="_blank">Link repository Github</a>
+                                    Le tecnologie utilizzate per implementare il progetto sono state:
+                                <ul>
+                                    <li>Python 3</li>
+                                    <ul>
+                                        <li>
+                                            Mediapipe
+                                        </li>
+                                        <li>
+                                            Tensorflow lite
+                                        </li>
+                                        <li>
+                                            Pandas
+                                        </li>
+                                        <li>
+                                            Sklearn
+                                        </li>
+                                        <li>
+                                            Matplotlib
+                                        </li>
+                                        <li>
+                                            OpenCV
+                                        </li>
+                                    </ul>
+                                </ul>
+                                </ul>
+                                </ul>
+                                Framework per l'interfaccia grafica
+                                <ul>
+                                    <li>Kivy</li>
+                                    <li>KivyMD</li>
+                                </ul>
+                                </ul>
+                                </ul>
+                                Dispositivo Hardware
+                                <ul>
+                                    <li>Arduino UNO</li>
+                                </ul>
                                 </p>
 
-                        </div>
-                        <!--//content-->
-                    </div>
-                    <!--//section-inner-->
+                                <h3 class="h3-heading"> Codice sorgente</h3>
+                                <div class="content">
+                                    <p>
+                                        <a href="https://github.com/vinrus/progetto-visione" target="_blank">Link
+                                            repository Github</a>
+                                    </p>
+
+                                </div>
+                            </div>
                 </section>
 
                 <!-- Dataset -->
@@ -403,41 +434,14 @@ model = tf.keras.models.Sequential([
                         <h2 class="heading"><a id="dataset"></a>Dataset</h2>
                         <div class="content">
                             <p>The dataset è composto nel seguente modo:</p>
-
-                                <html>
-								<head>
-								<style>
-								#customers {
-								font-family: Arial, Helvetica, sans-serif;
-								border-collapse: collapse;
-								width: 100%;
-								}
-
-								#customers td, #customers th {
-								border: 1px solid #ddd;
-								padding: 8px;
-								}
-
-								#customers tr:nth-child(even){background-color: #f2f2f2;}
-
-								#customers tr:hover {background-color: #ddd;}
-
-								#customers th {
-								padding-top: 12px;
-								padding-bottom: 12px;
-								text-align: left;
-								background-color: #00991c;
-								color: white;
-								}
-								</style>
-								</head>
-								<body>
-
-                                <table id="customers">
-                                    <tr>
+                            <table class="table table-striped table-hover table-bordered border-dark ">
+                                <thead class="table-primary table-bordered border-dark">
+                                    <tr class="">
                                         <th>Classe</th>
                                         <th>n° di dati</th>
                                     </tr>
+                                </thead>
+                                <tbody class="">
                                     <tr>
                                         <td>Palm open</td>
                                         <td>3000</td>
@@ -470,20 +474,11 @@ model = tf.keras.models.Sequential([
                                         <td>Counter clockwise</td>
                                         <td>12000</td>
                                     </tr>
-                                </table>
-
-								</body>
-								</html>
-								
-								<p></p>	
-
-
+                                </tbody>
+                            </table>
                         </div>
-                        <!--//content-->
                     </div>
-                    <!--//section-inner-->
                 </section>
-                <!--//section-->
 
                 <section class="about section">
                     <div class="section-inner">
@@ -568,10 +563,6 @@ model = tf.keras.models.Sequential([
         <!--//container-->
     </footer>
     <!--//footer-->
-
-
-
-
 
 </body>
 
