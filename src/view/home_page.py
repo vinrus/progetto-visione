@@ -16,14 +16,14 @@ class HomePage(MDApp):
     def on_start(self):
          for i in range(3):
             if i == 0: 
-                tab = TabRecognitionArduino(title=f"Recognition+Detection+Arduino")
+                tab = TabRecognitionArduino(title=f"Recognition and Detection with Arduino")
                 self.root.ids.tabs.add_widget(tab)
             elif i == 1:
                 tab = TabRecognition(title=f"Recognition")
                 self.root.ids.tabs.add_widget(tab)
-            elif i == 2: 
-                tab = TabSettings(title=f"Settings")
-                self.root.ids.tabs.add_widget(tab)
+            # elif i == 2: 
+            #     tab = TabSettings(title=f"Settings")
+            #     self.root.ids.tabs.add_widget(tab)
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
         print(f"[DEBUG] {tab_text}")
@@ -34,7 +34,7 @@ MDBoxLayout:
     orientation: "vertical"
 
     MDTopAppBar:
-        title: "Project visione e percezione"
+        title: "Gesture classification and recognition with Arduino"
 
     MDTabs:
         id: tabs
@@ -200,44 +200,44 @@ MDBoxLayout:
                 disabled: root.isDisabledClassification
                 on_press: root.onClassification()
 
-<TabSettings>
-    GridLayout: 
-        rows: 2
-        cols: 2
-        height: 50
-        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+# <TabSettings>
+#     GridLayout: 
+#         rows: 2
+#         cols: 2
+#         height: 50
+#         pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
-        MDLabel:
-            halign: "center"
-            height: 50
-            text: "Path Model"
+#         MDLabel:
+#             halign: "center"
+#             height: 50
+#             text: "Path Model"
         
-        MDLabel:
-            id: pathModel
-            halign: "center"
-            text: root.getLabelPathModel()
-            height: 50
-            pos_hint: {"center_y": .5}
+#         MDLabel:
+#             id: pathModel
+#             halign: "center"
+#             text: root.getLabelPathModel()
+#             height: 50
+#             pos_hint: {"center_y": .5}
         
             
-        MDLabel:
-            halign: "center"
-            height: 50
-            text: "Path File Label"
+#         MDLabel:
+#             halign: "center"
+#             height: 50
+#             text: "Path File Label"
         
-        MDLabel:
-            id: pathLabel
-            halign: "center"
-            height: 50
-            text: root.getLabelPathLabel()
+#         MDLabel:
+#             id: pathLabel
+#             halign: "center"
+#             height: 50
+#             text: root.getLabelPathLabel()
 
-    BoxLayout:
-        orientation: "vertical"
-        heith: 2000
-        size_hint_x: None
+#     BoxLayout:
+#         orientation: "vertical"
+#         heith: 2000
+#         size_hint_x: None
         
-        MDLabel:
-            halign: "center"
+#         MDLabel:
+#             halign: "center"
 
     
 
