@@ -131,7 +131,7 @@ class ServiceRecognition:
                     
                     self.first = False  
                 self.list_xy.append((landmark_list[8][0], landmark_list[8][1]))       
-                cv2.circle(image, (self.center[0], self.center[1]), 1 + 5,(255, 0, 0), 2)         
+                cv2.circle(image, (self.center[0], self.center[1]), 20,(255, 0, 0), 4)         
                 angle_1 = math.atan2(self.point_1[1] - self.center[1], self.point_1[0] - self.center[0]) * 180 / math.pi
                 if len(self.list_xy) == 5:
                     angle_2 = math.atan2(self.list_xy[4][1] - self.center[1], self.list_xy[4][0] - self.center[0])  * 180 / math.pi 
@@ -149,10 +149,10 @@ class ServiceRecognition:
                     else:
                         self.last_angle_2 = angle_2 
                     self.angle_deg = abs(angle_1 - angle_2)
-                cv2.putText(image, "DEG:" + str(int(self.angle_deg)), (10, 30), cv2.FONT_HERSHEY_SIMPLEX,
-                1.0, (0, 0, 0), 4, cv2.LINE_AA)
-                cv2.putText(image, "DEG:" + str(int(self.angle_deg)), (10, 30), cv2.FONT_HERSHEY_SIMPLEX,
-                1.0, (255, 255, 255), 2, cv2.LINE_AA)  
+                cv2.putText(image, "DEG:" + str(int(self.angle_deg)), (40, 70), cv2.FONT_HERSHEY_SIMPLEX,
+                3.0, (0, 0, 0), 5, cv2.LINE_AA)
+                cv2.putText(image, "DEG:" + str(int(self.angle_deg)), (40, 70), cv2.FONT_HERSHEY_SIMPLEX,
+                3.0, (0, 0, 0), 3, cv2.LINE_AA)  
             else:
                 self.point_history.append([0, 0])
                 self.first = True
