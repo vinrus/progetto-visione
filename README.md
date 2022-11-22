@@ -60,3 +60,19 @@ Di seguito vengono presentati degli esempi dell'applicativo:<br><br>
 <img src="template/assets/img/PalmOpen.png" height=500 width=650 title="Palm open"> <br><br>
 <img src="template/assets/img/Fist.png" height=500 width=650 title="Fist">
 
+- **Hand gestures**:
+Di seguito vengono presentati degli esempi dell'applicativo:<br><br>
+
+     * Clockwise: ruota il servomotore in senso orario;
+     * Counter clockwise: ruota il servomotore in senso antiorario;
+     
+
+<br><img src="https://user-images.githubusercontent.com/115936473/203365073-3d687f1c-e0b4-45e6-9960-ec6e77b750a7.gif" height=500 width=650>
+<br><img src="https://user-images.githubusercontent.com/115936473/203366340-b127f428-f15b-4313-83ab-0753e73622e1.gif" height=500 width=650>
+<br><img src="https://user-images.githubusercontent.com/115936473/203366758-589e3ca1-55c8-4ad7-8bba-2f4faf0837d3.gif" height=500 width=650>
+
+
+
+
+
+
