@@ -27,8 +27,8 @@
                 <div class="col-md-8 align-self-center profile-content">
                     <div class="row align-items-center">
                         <div class="col-md-2">
-                            <img class="img-fluid  profile-image img-responsive pull-left"
-                                src="./assets/img/logo.svg" alt="logo" hegiht="300" width="300">
+                            <img class="img-fluid  profile-image img-responsive pull-left" src="./assets/img/logo.svg"
+                                alt="logo" hegiht="300" width="300">
                         </div>
                         <div class="col-md-10">
 
@@ -151,11 +151,10 @@
                             <strong>Schema circuitale</strong>
                             <p>Nell'immagine sottostante viene mostrato lo schema circuitale seguito dall'assemblaggio
                                 dei vari componenti. </p>
-                                <div class="row">
-                                    <img class="d-flex justify-content-center"
-                                    src="./assets/img/shemaArduino.svg" />
-                                </div>
-                                <br>
+                            <div class="row">
+                                <img class="d-flex justify-content-center" src="./assets/img/shemaArduino.svg" />
+                            </div>
+                            <br>
                             <br>
                             <strong>Utilizzo dei componenti</strong>
                             <p>I componenti sopra elencati mediante integrazione con l'applicativo desktop vengono
@@ -268,7 +267,8 @@
                             Prima colonna: numero della tastiera (utilizzato come l'ID della classe), dalla seconda
                             colonna in poi: coordinate dei Keypoints.</br></br>
 
-                            <img class="img-fluid  profile-image img-responsive pull-left" src="./assets/img/Dataset1.png">
+                            <img class="img-fluid  profile-image img-responsive pull-left"
+                                src="./assets/img/Dataset1.png">
                             </br></br>
                             </p>
 
@@ -283,7 +283,8 @@
                                 gestures ha richiesto l'estensione dello script
                                 ,precedentemente introdotto, affinchè implementasse la classificazione del segno
                                 <i>indice</i> e di conseguenza, l'estrazione del singolo keypoint
-                                dell'indice in una coda <i>FIFO</i> che mantiene i punti dei 20 frame precedenti.</br></br>
+                                dell'indice in una coda <i>FIFO</i> che mantiene i punti dei 20 frame
+                                precedenti.</br></br>
                                 Anche in questo caso i dati estratti dai Landmarks vengono preprocessati, prima di
                                 inserirli nel file di dataset.</br>
 
@@ -316,7 +317,8 @@
                                 <li>20% test;</li>
                                 <li>20% validation.</li>
                             </ul>
-                            <iframe class="w-100" style="height: 50vh;" src="./assets/plot/data-plot.html"></iframe></br>
+                            <iframe class="w-100" style="height: 50vh;"
+                                src="./assets/plot/data-plot.html"></iframe></br>
                             Il modello della rete vine creato nel seguente modo:</br></br>
                             <div class="row">
 
@@ -343,7 +345,8 @@ model = tf.keras.models.Sequential([
                                 <li>20% test;</li>
                                 <li>20% validation.</li>
                             </ul>
-                            <iframe class="w-100" style="height: 50vh;" src="./assets/plot/data-plot2.html"></iframe></br>
+                            <iframe class="w-100" style="height: 50vh;"
+                                src="./assets/plot/data-plot2.html"></iframe></br>
 
                             Il modello della rete vine creato nel seguente modo:</br></br>
 
@@ -361,64 +364,68 @@ model = tf.keras.models.Sequential([
                             <div class="row">
                                 <img class="model" src="./assets/img/model_hand_gesture.png">
                             </div>
-                            </br></br>
-                            <h3 class="h3-heading"> Interfaccia grafica </h3>
-                            <div class = "content">
-                                <p>
-                                    L'interfaccia grafica è stata realizzata mediante l'uso congiunto di due 
-                                    librerie , <strong><i>Kivy</i></strong> e <strong><i>KivyMD</i></strong>. Lo scopo finale della sua realizzazione 
-                                    è interagire con arduino in modo semplice e veloce inglobando gli output dei precedenti passaggi,
-                                    in particolare i due modelli risultanti dall' addestramento delle rispettive reti neurali. I componenti 
-                                    che la costituiscono sono:
-                                    <ul>
-                                        <li>
-                                            Una <i>App Bar</i> che mostra il nome dell'applicazione,
-                                        </li>
-                                        <li>
-                                            un <i>Tab Menu<i> che mostra le due modalità di funzionamento,
-                                        </li>
-                                        <li>
-                                            un <i>modello di Arduino</i> in una configurazione compatibile con il dispositivo fisico  per mostrare un feedback della conversione,
-                                        </li>
-                                        <li>
-                                            uno <i>spazio per la camera</i> che mostra il video della web cam,
-                                        </li>
-                                        <li>
-                                            un <i> Flat Icon Button</i> per richiedere l'accensione della web cam,
-                                        </li>
-                                        <li>
-                                            un <i> Flat Icon Button</i> per richiedere la connessione con il dispositivo Arduino,
-                                        </li>
-                                        <li>
-                                            un <i> Flat Icon Button</i> per richiedere l'avvio della classificazione.
-                                        </li>                                        
-                                    </ul>
-                                    </br>
-                                    Il risultato finale della disposizione degli elementi appena elencati è il seguente: </br>
-                                    </br>
-                                    <div class="row">
-                                        <img class="ui"
-                                        src="./assets/img/home_page.png" ,  />
-                                    </div>
-                                    <h3 class="h3-heading"> Recognition and Detection with Arduino</h3> 
-                                    <p>
-                                        in questa tab abbiamo il funzionamento congiunto dell'applicazione con Arduino. Quindi, in 
-                                        successione, mediante i bottoni è possibile avviare la web cam, connettersi al dispositivo fisico ed
-                                        iniziare la fase di Detection sfruttando i modelli creati nelle fasi precendenti. Di seguito viene mostrato
-                                        il riconoscimento dell'hand sign <strong><i>Finger 2</i></strong> che accende il led rosso, inoltre in basso è possibile
-                                        conoscere la percentuale di previsione effettuata dal modello.
-                                    </p> 
-                                    <div class = "row">
-                                        <img class="ui"
-                                        src="./assets/img/Finger2.png" ,  />   
-                                    </div>            
-
-                                </p>
-                            </div>
-
-
-
                         </div>
+                        </br></br>
+                        <h3 class="h3-heading"> Interfaccia grafica </h3>
+                        <div class="content">
+                            <p>
+                                L'interfaccia grafica è stata realizzata mediante l'uso congiunto di due
+                                librerie , <strong><i>Kivy</i></strong> e <strong><i>KivyMD</i></strong>. Lo scopo
+                                finale della sua realizzazione
+                                è interagire con arduino in modo semplice e veloce inglobando gli output dei precedenti
+                                passaggi,
+                                in particolare i due modelli risultanti dall' addestramento delle rispettive reti
+                                neurali. I componenti
+                                che la costituiscono sono:
+                                
+                            </p>
+                            <ul>
+                                <li>
+                                    Una <i>App Bar</i> che mostra il nome dell'applicazione,
+                                </li>
+                                <li>
+                                    un <i>Tab Menu</i> che mostra le due modalità di funzionamento,
+                                </li>
+                                <li>
+                                    un <i>modello di Arduino</i> in una configurazione compatibile con il dispositivo
+                                    fisico per mostrare un feedback della conversione,
+                                </li>
+                                <li>
+                                    uno <i>spazio per la camera</i> che mostra il video della web cam,
+                                </li>
+                                <li>
+                                    un <i> Flat Icon Button</i> per richiedere l'accensione della web cam,
+                                </li>
+                                <li>
+                                    un <i> Flat Icon Button</i> per richiedere la connessione con il dispositivo
+                                    Arduino,
+                                </li>
+                                <li>
+                                    un <i> Flat Icon Button</i> per richiedere l'avvio della classificazione.
+                                </li>
+                            </ul>
+                            Il risultato finale della disposizione degli elementi appena elencati è il seguente: </br>
+                            </br>
+                            <div class="row">
+                                <img class="ui" src="./assets/img/home_page.png" , />
+                            </div>
+                            <h3 class="h3-heading"> Recognition and Detection with Arduino</h3>
+                            <p>
+                                in questa tab abbiamo il funzionamento congiunto dell'applicazione con Arduino. Quindi,
+                                in
+                                successione, mediante i bottoni è possibile avviare la web cam, connettersi al
+                                dispositivo fisico ed
+                                iniziare la fase di Detection sfruttando i modelli creati nelle fasi precendenti. Di
+                                seguito viene mostrato
+                                il riconoscimento dell'hand sign <strong><i>Finger 2</i></strong> che accende il led
+                                rosso, inoltre in basso è possibile
+                                conoscere la percentuale di previsione effettuata dal modello.
+                            </p>
+                            <div class="row">
+                                <img class="ui" src="./assets/img/Finger2.png" , />
+                            </div>
+                            </p>
+                        </div>            
                     </div>
                 </section>
 
@@ -584,10 +591,9 @@ model = tf.keras.models.Sequential([
                             <p>
                                 Per quando riguarda il modello per la classificazione degli <i>Hand Sign</i>
                                 abbiamo:</br>
-                                <div class="row">
-                                    <img class="d-flex justify-content-center" 
-                                    src="./assets/img/confusionMatrix1.png"> 
-                                </div></br></br>
+                            <div class="row">
+                                <img class="d-flex justify-content-center" src="./assets/img/confusionMatrix1.png">
+                            </div></br></br>
 
 
                             <table class="table table-striped table-hover table-bordered border-dark ">
@@ -640,8 +646,10 @@ model = tf.keras.models.Sequential([
                             </table>
                             </p>
                             <p>
-                                <iframe class="w-100" style="height: 50vh;" src="./assets/plot/train1.html"></iframe></br>
-                                <iframe class="w-100" style="height: 50vh;" src="./assets/plot/validation1.html"></iframe></br>
+                                <iframe class="w-100" style="height: 50vh;"
+                                    src="./assets/plot/train1.html"></iframe></br>
+                                <iframe class="w-100" style="height: 50vh;"
+                                    src="./assets/plot/validation1.html"></iframe></br>
                             </p>
 
                             <p>
@@ -649,11 +657,11 @@ model = tf.keras.models.Sequential([
                                 abbiamo:</br>
 
 
-                                    
+
                             <div class="row">
                                 <img class="d-flex justify-content-center" src="./assets/img/confusionMatrix2.png">
                             </div>
-                        </br></br>
+                            </br></br>
 
                             <table class="table table-striped table-hover table-bordered border-dark ">
                                 <thead class="table-warning table-bordered border-dark">
@@ -681,8 +689,10 @@ model = tf.keras.models.Sequential([
                             </table>
                             </p>
                             <p>
-                                <iframe class="w-100" style="height: 50vh;" src="./assets/plot/train2.html"></iframe></br>
-                                <iframe class="w-100" style="height: 50vh;" src="./assets/plot/validation2.html"></iframe></br>
+                                <iframe class="w-100" style="height: 50vh;"
+                                    src="./assets/plot/train2.html"></iframe></br>
+                                <iframe class="w-100" style="height: 50vh;"
+                                    src="./assets/plot/validation2.html"></iframe></br>
                             </p>
                         </div>
                         <!--//content-->
