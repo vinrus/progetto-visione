@@ -335,10 +335,8 @@ model = tf.keras.models.Sequential([
                             </div>
 
                             <div class="row">
-                                <img class="d-flex justify-content-center" src="./assets/img/model1.png" hegiht="400"
-                                    width="400">
+                                <img class="model" src="./assets/img/model_hand_sign.png">
                             </div>
-                            </br></br>
                             </br>Anche il dataset per le <i>hand gesture</i> è stato diviso in:
                             <ul>
                                 <li>60% training;</li>
@@ -361,10 +359,62 @@ model = tf.keras.models.Sequential([
                                 </code></pre>
 
                             <div class="row">
-                                <img class="d-flex justify-content-center" src="./assets/img/model2.png" hegiht="400"
-                                    width="400">
+                                <img class="model" src="./assets/img/model_hand_gesture.png">
                             </div>
                             </br></br>
+                            <h3 class="h3-heading"> Interfaccia grafica </h3>
+                            <div class = "content">
+                                <p>
+                                    L'interfaccia grafica è stata realizzata mediante l'uso congiunto di due 
+                                    librerie , <strong><i>Kivy</i></strong> e <strong><i>KivyMD</i></strong>. Lo scopo finale della sua realizzazione 
+                                    è interagire con arduino in modo semplice e veloce inglobando gli output dei precedenti passaggi,
+                                    in particolare i due modelli risultanti dall' addestramento delle rispettive reti neurali. I componenti 
+                                    che la costituiscono sono:
+                                    <ul>
+                                        <li>
+                                            Una <i>App Bar</i> che mostra il nome dell'applicazione,
+                                        </li>
+                                        <li>
+                                            un <i>Tab Menu<i> che mostra le due modalità di funzionamento,
+                                        </li>
+                                        <li>
+                                            un <i>modello di Arduino</i> in una configurazione compatibile con il dispositivo fisico  per mostrare un feedback della conversione,
+                                        </li>
+                                        <li>
+                                            uno <i>spazio per la camera</i> che mostra il video della web cam,
+                                        </li>
+                                        <li>
+                                            un <i> Flat Icon Button</i> per richiedere l'accensione della web cam,
+                                        </li>
+                                        <li>
+                                            un <i> Flat Icon Button</i> per richiedere la connessione con il dispositivo Arduino,
+                                        </li>
+                                        <li>
+                                            un <i> Flat Icon Button</i> per richiedere l'avvio della classificazione.
+                                        </li>                                        
+                                    </ul>
+                                    </br>
+                                    Il risultato finale della disposizione degli elementi appena elencati è il seguente: </br>
+                                    </br>
+                                    <div class="row">
+                                        <img class="ui"
+                                        src="./assets/img/home_page.png" ,  />
+                                    </div>
+                                    <h3 class="h3-heading"> Recognition and Detection with Arduino</h3> 
+                                    <p>
+                                        in questa tab abbiamo il funzionamento congiunto dell'applicazione con Arduino. Quindi, in 
+                                        successione, mediante i bottoni è possibile avviare la web cam, connettersi al dispositivo fisico ed
+                                        iniziare la fase di Detection sfruttando i modelli creati nelle fasi precendenti. Di seguito viene mostrato
+                                        il riconoscimento dell'hand sign <strong><i>Finger 2</i></strong> che accende il led rosso, inoltre in basso è possibile
+                                        conoscere la percentuale di previsione effettuata dal modello.
+                                    </p> 
+                                    <div class = "row">
+                                        <img class="ui"
+                                        src="./assets/img/Finger2.png" ,  />   
+                                    </div>            
+
+                                </p>
+                            </div>
 
 
 
