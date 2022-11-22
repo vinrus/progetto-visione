@@ -163,11 +163,9 @@
                             <ul>
                                 <li>
                                     <p class="fw-bold mb-0">Led:</p>
-                                    <!--TODO da rivedere questa parte-->
                                     <p class="fw-italic mb-0">Comportamento "Singolo":</p>
                                     <ol>
                                         <li>
-                                            <!--TODO cosi da simulare il l'accensione di una luce-->
                                             <span style="color: #ff0000">Rosso</span>: si accende quando viene recepita
                                             la gesture che indica il numero due
                                         </li>
@@ -285,7 +283,7 @@
                                 gestures ha richiesto l'estensione dello script
                                 ,precedentemente introdotto, affinchè implementasse la classificazione del segno
                                 <i>indice</i> e di conseguenza, l'estrazione del singolo keypoint
-                                dell'indice in una coda FIFO che mantiene i punti dei 20 frame precedenti.</br></br>
+                                dell'indice in una coda <i>FIFO</i> che mantiene i punti dei 20 frame precedenti.</br></br>
                                 Anche in questo caso i dati estratti dai Landmarks vengono preprocessati, prima di
                                 inserirli nel file di dataset.</br>
 
@@ -396,7 +394,7 @@ model = tf.keras.models.Sequential([
                                             Pandas
                                         </li>
                                         <li>
-                                            Sklearn
+                                            Scikit-learn
                                         </li>
                                         <li>
                                             Matplotlib
@@ -437,7 +435,7 @@ model = tf.keras.models.Sequential([
                     <div class="section-inner">
                         <h2 class="heading"><a id="dataset"></a>Dataset</h2>
                         <div class="content">
-                            <p>The dataset è composto nel seguente modo:</p>
+                            <p>Il dataset è composto nel seguente modo:</p>
                             <table class="table table-striped table-hover table-bordered border-dark ">
                                 <thead class="table-primary table-bordered border-dark">
                                     <tr class="">
