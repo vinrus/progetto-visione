@@ -1,4 +1,5 @@
 # Progetto per l'esame di Visione e Percezione
+
 - Linguaggio di programmazione: ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
 - Librerie: ![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)   ![Plotly](https://img.shields.io/badge/Plotly-%233F4F75.svg?style=for-the-badge&logo=plotly&logoColor=white) ![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
@@ -54,24 +55,38 @@ Di seguito vengono presentati degli esempi dell'applicativo:<br><br>
      * Palm Open: accende tutti i led;
      * Fist: spegne tutti i led.
 
-<br><img src="template/assets/img/Finger2.png" height=500 width=650 title="Finger 2"> <br><br>
-<img src="template/assets/img/Finger3.png" height=500 width=650 title="Finger 3"> <br><br>
-<img src="template/assets/img/Finger4.png" height=500 width=650 title="Finger 4"> <br><br>
-<img src="template/assets/img/PalmOpen.png" height=500 width=650 title="Palm open"> <br><br>
-<img src="template/assets/img/Fist.png" height=500 width=650 title="Fist">
+<br>
+
+
+Finger2                    |  Finger2 Arduiino         |
+:-------------------------:|:-------------------------:|
+<img src="template/assets/img/Finger2.png" width="500" />  |   <img src="template/assets/img/arduinoFinger2.png" width="500" /> |
+
+Finger3                    |  Finger3 Arduiino        |
+:-------------------------:|:-------------------------:|
+<img src="template/assets/img/Finger3.png" width="500" />  |   <img src="template/assets/img/arduinoFinger3.png" width="500" /> |
+
+Finger4 Open                  |  Finger4 Arduiino        |
+:-------------------------:|:-------------------------:|
+<img src="template/assets/img/Finger4.png" width="500" />  |   <img src="template/assets/img/arduinoFinger4.png" width="500" /> |
+
+Palm Open                  |  PalmOpen Arduiino        |
+:-------------------------:|:-------------------------:|
+<img src="template/assets/img/PalmOpen.png" width="500" />  |   <img src="template/assets/img/arduinoPalmOpen.png" width="500" /> |
+
+Fist                       |  Fist Arduiino        |
+:-------------------------:|:-------------------------:|
+<img src="template/assets/img/Fist.png" width="500" />  |   <img src="template/assets/img/arduinoFist.png" width="500" /> |
 
 - **Hand gestures**:
 Di seguito vengono presentati degli esempi dell'applicativo:<br><br>
 
      * Clockwise: ruota il servomotore in senso orario;
      * Counter clockwise: ruota il servomotore in senso antiorario;
-     
 
-<br><img src="https://user-images.githubusercontent.com/115936473/203365073-3d687f1c-e0b4-45e6-9960-ec6e77b750a7.gif" height=500 width=650>
-<br><img src="https://user-images.githubusercontent.com/115936473/203366340-b127f428-f15b-4313-83ab-0753e73622e1.gif" height=500 width=650>
-<br><img src="https://user-images.githubusercontent.com/115936473/203366758-589e3ca1-55c8-4ad7-8bba-2f4faf0837d3.gif" height=500 width=650>
-
-
+Clockwise                  |  Counter Clockwise        |  Final Test               |
+:-------------------------:|:-------------------------:|:-------------------------:|
+<img src="template/assets/gif/clockwise.gif" width="500" />  |   <img src="template/assets/gif/counterClockWise.gif" width="500" /> | <img src="template/assets/gif/finalGesture.gif" width="500" /> |
 
 
 
