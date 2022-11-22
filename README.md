@@ -53,8 +53,6 @@ Di seguito vengono presentati degli esempi dell'applicativo:<br><br>
      * Finger 4: accende il led blu;
      * Palm Open: accende tutti i led;
      * Fist: spegne tutti i led.
-     * Clockwise: gira il servomotore in senso orario;
-     * Counterclockwise: gira il servomotore in senso antiorario.
 
 <br><img src="template/assets/img/Finger2.png" height=500 width=650 title="Finger 2"> <br><br>
 <img src="template/assets/img/Finger3.png" height=500 width=650 title="Finger 3"> <br><br>
@@ -62,15 +60,3 @@ Di seguito vengono presentati degli esempi dell'applicativo:<br><br>
 <img src="template/assets/img/PalmOpen.png" height=500 width=650 title="Palm open"> <br><br>
 <img src="template/assets/img/Fist.png" height=500 width=650 title="Fist">
 
-
-<video width="650" height="500" autoplay loop>
-     <source src="template/assets/video/Clockwise.mov">
-</video>
-
-</br><video width="650" height="500" autoplay loop>
-     <source src="template/assets/video/Counter Clockwise.mov">
-</video>
-
-</br><video width="650" height="500" autoplay loop>
-     <source src="template/assets/video/Final_test.mov">
-</video>
