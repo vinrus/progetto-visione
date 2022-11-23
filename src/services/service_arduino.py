@@ -28,9 +28,9 @@ class ServiceArduino:
         array_data = []
         if handedness != []:
             array_data = self._handleGenerationArray(handedness, data, ids)
-            print(f"[DEBUG] array_data = {str(array_data)}")
+            # print(f"[DEBUG] array_data = {str(array_data)}")
             if self.arduino != None and self.arduino.isOpen() and array_data != {} : 
-                print(f"[DEBUG] write jsonData = {str(array_data)}")
+                # print(f"[DEBUG] write jsonData = {str(array_data)}")
                 stringa = ''
                 for i in array_data:
                     stringa += str(i)
@@ -38,12 +38,12 @@ class ServiceArduino:
                 # stringa = stringa[:-1]
                 # arduino.write(bytes(x, 'utf-8'))
                 encoding = str(stringa).encode('utf-8')
-                print("[DEBUG] array_data: ", encoding)
+                # print("[DEBUG] array_data: ", encoding)
                 self.arduino.write(encoding)
 
 
     def _handleGenerationArray(self, handedness, data, ids):
-        print(f'[DEBUG] handedness {str(handedness)}')
+        # print(f'[DEBUG] handedness {str(handedness)}')
         self.label = handedness['label']
         self.score = handedness['score']
         self.hand = handedness['labelHand']
@@ -52,7 +52,7 @@ class ServiceArduino:
             action = self._readAction(ids)
             version = '0'
             self.count = self.count + 1
-            print(f'[DEBUG] self.count {str(self.count)}')
+            # print(f'[DEBUG] self.count {str(self.count)}')
             if self.count > 10 : 
                 if self.label == 'Index' : 
                     self.count = 0
@@ -62,7 +62,7 @@ class ServiceArduino:
                         version = '2'
                 
             data = [str(action), str(version)]
-        print(f"[DEBUG] array = {str(data)}")
+        # print(f"[DEBUG] array = {str(data)}")
         return data
 
     def _readAction(self, ids):
@@ -73,32 +73,32 @@ class ServiceArduino:
             ids.led_blue.icon = "led-variant-on"
             return 5
         elif self.label == "Finger3" : 
-            print (f'[DEBUG] Finger3')
+            # print (f'[DEBUG] Finger3')
             self._restLed(ids)
             ids.led_green.md_bg_color = [0, 1, 0, 1]
             ids.led_green.icon = "led-variant-on"
             return 4
         elif self.label == "Finger2" : 
-            print (f'[DEBUG] Finger2')
+            # print (f'[DEBUG] Finger2')
             self._restLed(ids)
             ids.led_red.md_bg_color = [1, 0, 0, 1]
             ids.led_red.icon = "led-variant-on"
             return 3
         elif self.label == "Index" : 
-            print (f'[DEBUG] Index with : {self.versionGesture}')
-            #TODO gira il motore
+            # print (f'[DEBUG] Index with : {self.versionGesture}')
+            # gira il motore
             if self.versionGesture == 1 : 
                 ids.servo_motor.icon = "restore"
             else:
                 ids.servo_motor.icon = "reload"
             return 2
         elif self.label == "PalmOpen" : 
-            print (f'[DEBUG] PalmOpen')
+            # print (f'[DEBUG] PalmOpen')
             self._restLed(ids)
             self._openLed(ids)
             return 1
         elif self.label == "Fist" : 
-            print (f'[DEBUG] Fist')
+            # print (f'[DEBUG] Fist')
             self._restLed(ids)
             return 0
 

@@ -116,7 +116,7 @@ class ServiceRecognition:
         finger_gesture_id = -1
         if isArduino: 
             if hand_sign_id == 2 : 
-                print("[INFO] hand_sign_id == 2:  " + str(landmark_list[8]))
+                # print("[INFO] hand_sign_id == 2:  " + str(landmark_list[8]))
                 self.point_history.append(landmark_list[8])
                 if self.first == True:
                     # Center Point

@@ -58,23 +58,23 @@ Di seguito vengono presentati degli esempi dell'applicativo:<br><br>
 <br>
 
 
-Finger2                    |  Finger2 Arduiino         |
+Finger2                    |  Finger2 Arduino         |
 :-------------------------:|:-------------------------:|
 <img src="template/assets/img/Finger2.png" width="500" />  |   <img src="template/assets/img/arduinoFinger2.png" width="500" /> |
 
-Finger3                    |  Finger3 Arduiino        |
+Finger3                    |  Finger3 Arduino        |
 :-------------------------:|:-------------------------:|
 <img src="template/assets/img/Finger3.png" width="500" />  |   <img src="template/assets/img/arduinoFinger3.png" width="500" /> |
 
-Finger4 Open                  |  Finger4 Arduiino        |
+Finger4 Open                  |  Finger4 Arduino        |
 :-------------------------:|:-------------------------:|
 <img src="template/assets/img/Finger4.png" width="500" />  |   <img src="template/assets/img/arduinoFinger4.png" width="500" /> |
 
-Palm Open                  |  PalmOpen Arduiino        |
+Palm Open                  |  PalmOpen Arduino        |
 :-------------------------:|:-------------------------:|
 <img src="template/assets/img/PalmOpen.png" width="500" />  |   <img src="template/assets/img/arduinoPalmOpen.png" width="500" /> |
 
-Fist                       |  Fist Arduiino        |
+Fist                       |  Fist Arduino        |
 :-------------------------:|:-------------------------:|
 <img src="template/assets/img/Fist.png" width="500" />  |   <img src="template/assets/img/arduinoFist.png" width="500" /> |
 
