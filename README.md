@@ -87,7 +87,3 @@ Di seguito vengono presentati degli esempi dell'applicativo:<br><br>
 Clockwise                  |  Counter Clockwise        |  Final Test               |
 :-------------------------:|:-------------------------:|:-------------------------:|
 <img src="template/assets/gif/clockwise.gif" width="500" />  |   <img src="template/assets/gif/counterClockWise.gif" width="500" /> | <img src="template/assets/gif/finalGesture.gif" width="500" /> |
-
-
-
-
