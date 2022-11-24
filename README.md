@@ -13,6 +13,12 @@
 
 - Strumenti di sviluppo: ![Jupyter Notebook](https://img.shields.io/badge/jupyter-%23FA0F00.svg?style=for-the-badge&logo=jupyter&logoColor=white) ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 
+<hr>
+
+**Docs**: 👉🏻  [![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)]( https://vinrus.github.io/progetto-visione/template/template-project.html)
+
+
+<hr>
 - Installare le dipendenze necessarie tramite il file requirements.txt con il comando : <br><br>
         <code>
              pip3 install -r requirements.txt
@@ -87,7 +93,3 @@ Di seguito vengono presentati degli esempi dell'applicativo:<br><br>
 Clockwise                  |  Counter Clockwise        |  Final Test               |
 :-------------------------:|:-------------------------:|:-------------------------:|
 <img src="template/assets/gif/clockwise.gif" width="500" />  |   <img src="template/assets/gif/counterClockWise.gif" width="500" /> | <img src="template/assets/gif/finalGesture.gif" width="500" /> |
-
-
-
-
